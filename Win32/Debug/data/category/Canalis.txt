@@ -1,0 +1,4 @@
+Список ігнорованих заголовків
+Canalis - Settings
+CANALIS - Statistic
+Створення нової категорії

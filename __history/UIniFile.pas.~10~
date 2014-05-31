@@ -1,0 +1,42 @@
+unit UIniFile;
+
+interface
+
+uses System.IniFiles;
+
+procedure SetDefaultIniSetting;
+procedure SetIniSetting;
+procedure GetIniSetting;
+
+implementation
+
+procedure SetIniSetting;
+var
+  IniFile: TIniFile;
+begin
+  IniFile := TIniFile.Create('Settings');
+  with IniFile do
+  begin
+    WriteBool('AllowedBrowsers','chrome',True);
+    WriteBool('AllowedBrowsers','firefox',True);
+    WriteBool('AllowedBrowsers','opera',True);
+    WriteBool('AllowedBrowsers','ie',True);
+    WriteBool('Setting','SkipListAllowed',True);
+  end;
+  IniFile.Free;
+end;
+
+procedure ApplyParamsIni;
+var
+  IniFile: TIniFile;
+begin
+  IniFile := TIniFile.Create('Settings');
+  IniFile.Free;
+end;
+
+procedure GetIniSetting;
+begin
+  //
+end;
+
+end.

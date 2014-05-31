@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.460,=C:\Users\Volodia\Dropbox\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.289,=C:\Users\Volodia\Dropbox\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.241,C:\Users\Volodia\Dropbox\ProjectCANALIS\Unit1.pas=C:\Users\Volodia\Dropbox\ProjectCANALIS\UIniFile.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.225,=C:\Users\Volodia\Dropbox\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.069,=C:\Users\chornenkyy\Dropbox\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.643,=C:\Users\chornenkyy\Dropbox\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.213,=C:\Users\chornenkyy\Dropbox\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.748,=C:\Users\chornenkyy\Dropbox\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.274,=C:\Users\chornenkyy\Dropbox\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.954,C:\Users\chornenkyy\Dropbox\ProjectCANALIS\USettings.dfm=C:\Users\chornenkyy\Dropbox\ProjectCANALIS\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.438,=C:\Users\Volodia\Dropbox\ProjectCANALIS\UPassCheck.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.901,=C:\Users\Volodia\Dropbox\ProjectCANALIS\UPassCheck.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.538,C:\Users\chornenkyy\Dropbox\ProjectCANALIS\UPassCheck.pas=C:\Users\chornenkyy\Dropbox\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.935,C:\Users\chornenkyy\Dropbox\ProjectCANALIS\UPassCheck.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.637,C:\Users\Volodia\Dropbox\ProjectCANALIS\UPassCheck.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.508,=C:\Users\Volodia\Dropbox\programming\delphi\Current\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.956,=C:\Users\Volodia\Dropbox\programming\delphi\Current\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.872,C:\Users\chornenkyy\Dropbox\ProjectCANALIS\UGlobal.pas=C:\Users\chornenkyy\Dropbox\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.546,C:\Users\chornenkyy\Dropbox\ProjectCANALIS\UGlobal.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.127,C:\Users\Volodia\Dropbox\programming\delphi\Current\ProjectCANALIS\UCategoryMaster.pas=C:\Users\Volodia\Dropbox\programming\delphi\Current\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.439,C:\Users\chornenkyy\Dropbox\ProjectCANALIS\CANALIS.dproj=C:\Users\chornenkyy\Documents\RAD Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.693,C:\Users\chornenkyy\Dropbox\ProjectCANALIS\UMain.dfm=C:\Users\chornenkyy\Documents\RAD Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.628,C:\Users\Volodia\Dropbox\ProjectCANALIS\USecurity.pas=C:\Users\Volodia\Dropbox\ProjectCANALIS\UGlobal.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.640,=C:\Users\chornenkyy\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.261,C:\Users\chornenkyy\Dropbox\ProjectCANALIS\Unit1.dfm=C:\Users\chornenkyy\Dropbox\ProjectCANALIS\UStatistic.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.336,C:\Users\Volodia\Dropbox\ProjectCANALIS\UIgnoreList.dfm=C:\Users\Volodia\Dropbox\ProjectCANALIS\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.127,C:\Users\Volodia\Dropbox\programming\delphi\Current\ProjectCANALIS\UCategoryMaster.dfm=C:\Users\Volodia\Dropbox\programming\delphi\Current\ProjectCANALIS\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.482,C:\Users\Volodia\Dropbox\ProjectCANALIS\UPassChange.pas=C:\Users\Volodia\Dropbox\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.184,C:\Users\Volodia\Dropbox\programming\delphi\Current\ProjectCANALIS\UAddToCategory.pas=C:\Users\Volodia\Dropbox\programming\delphi\Current\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.306,C:\Users\Volodia\Dropbox\ProjectCANALIS\UIniFile.pas=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.954,C:\Users\chornenkyy\Dropbox\ProjectCANALIS\USettings.pas=C:\Users\chornenkyy\Dropbox\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.261,C:\Users\chornenkyy\Dropbox\ProjectCANALIS\Unit1.pas=C:\Users\chornenkyy\Dropbox\ProjectCANALIS\UStatistic.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.632,C:\Users\chornenkyy\Dropbox\ProjectCANALIS\Unit1.pas=C:\Users\chornenkyy\Dropbox\ProjectCANALIS\UGlobal.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.538,C:\Users\chornenkyy\Dropbox\ProjectCANALIS\UPassCheck.dfm=C:\Users\chornenkyy\Dropbox\ProjectCANALIS\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.482,C:\Users\Volodia\Dropbox\ProjectCANALIS\UPassChange.dfm=C:\Users\Volodia\Dropbox\ProjectCANALIS\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.336,C:\Users\Volodia\Dropbox\ProjectCANALIS\UIgnoreList.pas=C:\Users\Volodia\Dropbox\ProjectCANALIS\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.693,C:\Users\chornenkyy\Dropbox\ProjectCANALIS\UMain.pas=C:\Users\chornenkyy\Documents\RAD Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.184,C:\Users\Volodia\Dropbox\programming\delphi\Current\ProjectCANALIS\UAddToCategory.dfm=C:\Users\Volodia\Dropbox\programming\delphi\Current\ProjectCANALIS\Unit1.dfm</Transaction>
+  </Transactions>
+</BorlandProject>
