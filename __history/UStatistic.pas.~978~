@@ -512,6 +512,9 @@ begin
     and (FStatistic.cbbVisionChoice.Items[FStatistic.cbbVisionChoice.ItemIndex] <> 'Користувачі') then
     FMain.qryStatistic.SQL.Add(' AND (S_UserName LIKE '''+
       Fstatistic.cbbUsers.Items[FStatistic.cbbUsers.ItemIndex]+''')');
+  // User filter from edit.
+  if Length(edtSearch.Text) <> 0 then
+    FMain.qryStatistic.SQL.Add(' AND (S_Title LIKE ''%' + edtSearch.Text + '%'')');
   FMain.qryStatistic.SQL.Add('ORDER BY S_StartDate DESC');
   vDate := dtpMain.Date;
   if FSettings.rgStatisticTime.ItemIndex = 0 then
@@ -706,60 +709,8 @@ begin
 end;
 
 procedure TFStatistic.edtSearchChange(Sender: TObject);
-var
-  vDate: TDate;
-  i:Integer;
 begin
-  FMain.qryStatistic.SQL.Clear;
-  FMain.qryStatistic.SQL.Add('SELECT * FROM Statistic');
-  FMain.qryStatistic.SQL.Add('WHERE (S_StartDate BETWEEN :SDate AND :FDate)');
-  if FSettings.chkFiltered.Checked then
-    FMain.qryStatistic.SQL.Add(IgnoreListToSql());
-  if (FStatistic.cbbUsers.Items.Count <> 0)
-    and (FStatistic.cbbVisionChoice.Items[FStatistic.cbbVisionChoice.ItemIndex] <> 'Користувачі') then
-    FMain.qryStatistic.SQL.Add(' AND (S_UserName LIKE '''+
-      Fstatistic.cbbUsers.Items[FStatistic.cbbUsers.ItemIndex]+''')');
-  FMain.qryStatistic.SQL.Add('ORDER BY S_StartDate DESC');
-  vDate := dtpMain.Date;
-  if FSettings.rgStatisticTime.ItemIndex = 0 then
-  begin
-    // Term - day.
-    Fmain.qryStatistic.Parameters.ParamByName('SDate').Value := DateToStr(vDate);
-    Fmain.qryStatistic.Parameters.ParamByName('FDate').Value :=
-      DateToStr(IncDay(vDate,1));
-  end
-  else if FSettings.rgStatisticTime.ItemIndex = 1 then
-  begin
-    // Term - week.
-    FMain.qryStatistic.Parameters.ParamByName('SDate').Value :=
-      DateToStr(IncDay(vDate,(DayOfTheWeek(vDate)-1) * (-1)));
-    Fmain.qryStatistic.Parameters.ParamByName('FDate').Value :=
-      DateToStr(IncDay(vDate, (8-DayOfTheWeek(vDate))));
-  end
-  else if FSettings.rgStatisticTime.ItemIndex = 2 then
-  begin
-    // Term - month.
-    FMain.qryStatistic.Parameters.ParamByName('SDate').Value :=
-      DateToStr(EncodeDate(CustomDateDecode(vDate,0),
-        CustomDateDecode(vDate,1)-1,DaysInMonth(CustomDateDecode(vDate,0),
-          CustomDateDecode(vDate,1)-1)));
-    Fmain.qryStatistic.Parameters.ParamByName('FDate').Value :=
-      DateToStr(EncodeDate(CustomDateDecode(vDate,0),
-        CustomDateDecode(vDate,1)+1,1));
-  end
-  else if FSettings.rgStatisticTime.ItemIndex = 3 then
-  begin
-    // Term - year.
-    FMain.qryStatistic.Parameters.ParamByName('SDate').Value :=
-      DateToStr(EncodeDate(CustomDateDecode(vDate,0)-1,12,
-        DaysInMonth(CustomDateDecode(vDate,0)-1,12)));
-    Fmain.qryStatistic.Parameters.ParamByName('FDate').Value :=
-      DateToStr(EncodeDate(CustomDateDecode(vDate,0)+1,1,
-        DaysInMonth(CustomDateDecode(vDate,0)+1,1)));
-  end;
-  FMain.qryStatistic.Prepared := True;
-  FMain.qryStatistic.Active := True;
-  FMain.qryStatistic.First;
+  BetweenQuery;
 end;
 
 procedure TFStatistic.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -786,7 +737,10 @@ begin
   if FileExists('data\Ignore.lst') then
     Append(vFileIgnoreList)
   else
+  begin
     Rewrite(vFileIgnoreList);
+    Writeln(vFileIgnoreList, '');
+  end;
   writeln(vFileIgnoreList, dbgrdStatistic.DataSource.DataSet.FieldByName('S_Title').AsString);
   CloseFile(vFileIgnoreList);
   if FSettings.chkFiltered.Checked then
@@ -811,6 +765,7 @@ begin
     begin
       cbbVisionChoice.Visible := False;
       lblVisionChoice.Visible := False;
+      edtSearch.Visible := True;
       BetweenQuery;
     end;
     1:
@@ -818,6 +773,7 @@ begin
     begin
       cbbVisionChoice.Visible := True;
       lblVisionChoice.Visible := True;
+      edtSearch.Visible := False;
       cbbVisionChoiceChange(nil);
     end;
   end;

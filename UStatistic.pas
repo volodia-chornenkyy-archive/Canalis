@@ -542,16 +542,6 @@ begin
     Fmain.qryStatistic.Parameters.ParamByName('FDate').Value :=
       DateToStr(EncodeDate(CustomDateDecode(vDate,0),
         CustomDateDecode(vDate,1)+1,1));
-  end
-  else if FSettings.rgStatisticTime.ItemIndex = 3 then
-  begin
-    // Term - year.
-    FMain.qryStatistic.Parameters.ParamByName('SDate').Value :=
-      DateToStr(EncodeDate(CustomDateDecode(vDate,0)-1,12,
-        DaysInMonth(CustomDateDecode(vDate,0)-1,12)));
-    Fmain.qryStatistic.Parameters.ParamByName('FDate').Value :=
-      DateToStr(EncodeDate(CustomDateDecode(vDate,0)+1,1,
-        DaysInMonth(CustomDateDecode(vDate,0)+1,1)));
   end;
   FMain.qryStatistic.Prepared := True;
   FMain.qryStatistic.Active := True;

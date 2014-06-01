@@ -1,9 +1,10 @@
 object FStatistic: TFStatistic
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'CANALIS - Statistic'
   ClientHeight = 465
-  ClientWidth = 793
+  ClientWidth = 704
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,12 +19,15 @@ object FStatistic: TFStatistic
   object pnlBar: TPanel
     Left = 0
     Top = 419
-    Width = 793
+    Width = 704
     Height = 46
     Align = alBottom
     Color = clBtnHighlight
     ParentBackground = False
     TabOrder = 0
+    DesignSize = (
+      704
+      46)
     object lblDate: TLabel
       Left = 4
       Top = 2
@@ -69,11 +73,12 @@ object FStatistic: TFStatistic
         #1047#1072#1075#1072#1083#1100#1085#1072)
     end
     object btnSettings: TBitBtn
-      Left = 586
+      Left = 613
       Top = 16
-      Width = 75
+      Width = 87
       Height = 25
-      Caption = 'btnSettings'
+      Anchors = [akTop]
+      Caption = #1053#1072#1083#1072#1096#1090#1091#1074#1072#1085#1085#1103
       TabOrder = 2
       OnClick = btnSettingsClick
     end
@@ -98,7 +103,7 @@ object FStatistic: TFStatistic
   object pgcMain: TPageControl
     Left = 0
     Top = 0
-    Width = 793
+    Width = 704
     Height = 419
     ActivePage = tsList
     Align = alClient
@@ -109,7 +114,7 @@ object FStatistic: TFStatistic
       object dbgrdStatistic: TDBGrid
         Left = 0
         Top = 0
-        Width = 785
+        Width = 696
         Height = 391
         Align = alClient
         BorderStyle = bsNone
@@ -165,10 +170,14 @@ object FStatistic: TFStatistic
     object tsGraphics: TTabSheet
       Caption = #1043#1088#1072#1092#1110#1082#1080
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 785
+      ExplicitHeight = 0
       object chtMain: TChart
         Left = 0
         Top = 0
-        Width = 785
+        Width = 696
         Height = 350
         AllowPanning = pmNone
         BackWall.Pen.Visible = False
@@ -230,6 +239,7 @@ object FStatistic: TFStatistic
         BevelWidth = 2
         Color = clWhite
         TabOrder = 0
+        ExplicitWidth = 785
         DefaultCanvas = 'TGDIPlusCanvas'
         ColorPaletteIndex = 19
         object brsrsFavouriteWebPages: TBarSeries
@@ -333,10 +343,11 @@ object FStatistic: TFStatistic
       object pnlLegend: TPanel
         Left = 0
         Top = 350
-        Width = 785
+        Width = 696
         Height = 41
         Align = alBottom
         TabOrder = 1
+        ExplicitWidth = 785
         object imgLegend1: TImage
           Left = 11
           Top = 12

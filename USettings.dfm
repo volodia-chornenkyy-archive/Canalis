@@ -3,8 +3,8 @@ object FSettings: TFSettings
   Top = 0
   BorderStyle = bsSizeToolWin
   Caption = 'Canalis - Settings'
-  ClientHeight = 352
-  ClientWidth = 323
+  ClientHeight = 284
+  ClientWidth = 333
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,11 +19,13 @@ object FSettings: TFSettings
   TextHeight = 13
   object pnlSettings: TPanel
     Left = 0
-    Top = 290
-    Width = 323
+    Top = 222
+    Width = 333
     Height = 62
     Align = alBottom
     TabOrder = 0
+    ExplicitTop = 290
+    ExplicitWidth = 323
     object btnApply: TBitBtn
       Left = 8
       Top = 34
@@ -71,7 +73,7 @@ object FSettings: TFSettings
     end
   end
   object chbBrowserHistory: TCheckBox
-    Left = 71
+    Left = 8
     Top = 16
     Width = 182
     Height = 17
@@ -80,7 +82,7 @@ object FSettings: TFSettings
     OnClick = chbBrowserHistoryClick
   end
   object chklstBrowser: TCheckListBox
-    Left = 71
+    Left = 8
     Top = 39
     Width = 105
     Height = 58
@@ -94,8 +96,8 @@ object FSettings: TFSettings
     TabOrder = 2
   end
   object chkFiltered: TCheckBox
-    Left = 71
-    Top = 237
+    Left = 207
+    Top = 39
     Width = 153
     Height = 17
     Caption = #1060#1110#1083#1100#1090#1088#1091#1074#1072#1090#1080' '#1076#1072#1085#1110
@@ -105,8 +107,8 @@ object FSettings: TFSettings
     OnClick = chkClick
   end
   object chkAutorun: TCheckBox
-    Left = 71
-    Top = 260
+    Left = 207
+    Top = 62
     Width = 97
     Height = 17
     Caption = #1040#1074#1090#1086#1079#1072#1087#1091#1089#1082
@@ -116,7 +118,7 @@ object FSettings: TFSettings
     OnClick = chkClick
   end
   object rgStatisticTime: TRadioGroup
-    Left = 71
+    Left = 8
     Top = 103
     Width = 185
     Height = 105
@@ -125,14 +127,13 @@ object FSettings: TFSettings
     Items.Strings = (
       #1044#1077#1085#1100
       #1058#1080#1078#1076#1077#1085#1100
-      #1052#1110#1089#1103#1094#1100
-      #1056#1110#1082)
+      #1052#1110#1089#1103#1094#1100)
     TabOrder = 5
     OnClick = rgStatisticTimeClick
   end
   object chkGraph3d: TCheckBox
-    Left = 71
-    Top = 214
+    Left = 207
+    Top = 16
     Width = 97
     Height = 17
     Caption = #1054#1073#39#1108#1084#1085#1110' '#1076#1110#1072#1075#1088#1072#1084#1080
