@@ -105,7 +105,7 @@ object FStatistic: TFStatistic
     Top = 0
     Width = 704
     Height = 419
-    ActivePage = tsList
+    ActivePage = tsGraphics
     Align = alClient
     TabOrder = 1
     OnChange = pgcMainChange
@@ -170,10 +170,6 @@ object FStatistic: TFStatistic
     object tsGraphics: TTabSheet
       Caption = #1043#1088#1072#1092#1110#1082#1080
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 785
-      ExplicitHeight = 0
       object chtMain: TChart
         Left = 0
         Top = 0
@@ -226,6 +222,8 @@ object FStatistic: TFStatistic
         LeftAxis.LabelsFormat.Font.Height = -9
         LeftAxis.LabelsFormat.TextAlignment = taCenter
         LeftAxis.LabelStyle = talValue
+        LeftAxis.Title.Caption = #1057#1077#1082#1091#1085#1076#1080
+        LeftAxis.Title.Visible = False
         RightAxis.LabelsFormat.TextAlignment = taCenter
         TopAxis.LabelsFormat.TextAlignment = taCenter
         View3DOptions.Elevation = 350
@@ -239,7 +237,6 @@ object FStatistic: TFStatistic
         BevelWidth = 2
         Color = clWhite
         TabOrder = 0
-        ExplicitWidth = 785
         DefaultCanvas = 'TGDIPlusCanvas'
         ColorPaletteIndex = 19
         object brsrsFavouriteWebPages: TBarSeries
@@ -347,7 +344,6 @@ object FStatistic: TFStatistic
         Height = 41
         Align = alBottom
         TabOrder = 1
-        ExplicitWidth = 785
         object imgLegend1: TImage
           Left = 11
           Top = 12
