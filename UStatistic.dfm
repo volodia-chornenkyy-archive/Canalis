@@ -22,6 +22,7 @@ object FStatistic: TFStatistic
     Width = 704
     Height = 46
     Align = alBottom
+    BevelOuter = bvNone
     Color = clBtnHighlight
     ParentBackground = False
     TabOrder = 0
@@ -234,6 +235,7 @@ object FStatistic: TFStatistic
         Zoom.Animated = True
         Zoom.Pen.Mode = pmNotXor
         Align = alClient
+        BevelOuter = bvNone
         BevelWidth = 2
         Color = clWhite
         TabOrder = 0
@@ -343,6 +345,7 @@ object FStatistic: TFStatistic
         Width = 696
         Height = 41
         Align = alBottom
+        BevelOuter = bvNone
         TabOrder = 1
         object imgLegend1: TImage
           Left = 11

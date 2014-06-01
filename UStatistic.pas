@@ -730,6 +730,7 @@ begin
   begin
     Rewrite(vFileIgnoreList);
     Writeln(vFileIgnoreList, '');
+    Writeln(vFileIgnoreList, 'Program Manager');
   end;
   writeln(vFileIgnoreList, dbgrdStatistic.DataSource.DataSet.FieldByName('S_Title').AsString);
   CloseFile(vFileIgnoreList);
