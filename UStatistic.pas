@@ -154,9 +154,9 @@ begin
     Delete(title, vCategoryPos, Length(title));
 
   lbl.Hint := title;
-  if Length(title) > 20 then
+  if Length(title) > 15 then
   begin
-    Delete(title, 20, Length(title) - 16);
+    Delete(title, 15, Length(title) - 16);
     lbl.Caption := title + '...';
   end
   else

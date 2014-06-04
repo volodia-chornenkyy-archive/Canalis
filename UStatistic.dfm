@@ -4,7 +4,7 @@ object FStatistic: TFStatistic
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'CANALIS - Statistic'
   ClientHeight = 465
-  ClientWidth = 704
+  ClientWidth = 772
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,15 +19,16 @@ object FStatistic: TFStatistic
   object pnlBar: TPanel
     Left = 0
     Top = 419
-    Width = 704
+    Width = 772
     Height = 46
     Align = alBottom
     BevelOuter = bvNone
     Color = clBtnHighlight
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 704
     DesignSize = (
-      704
+      772
       46)
     object lblDate: TLabel
       Left = 4
@@ -74,7 +75,7 @@ object FStatistic: TFStatistic
         #1047#1072#1075#1072#1083#1100#1085#1072)
     end
     object btnSettings: TBitBtn
-      Left = 613
+      Left = 676
       Top = 16
       Width = 87
       Height = 25
@@ -82,6 +83,7 @@ object FStatistic: TFStatistic
       Caption = #1053#1072#1083#1072#1096#1090#1091#1074#1072#1085#1085#1103
       TabOrder = 2
       OnClick = btnSettingsClick
+      ExplicitLeft = 613
     end
     object cbbUsers: TComboBox
       Left = 252
@@ -104,18 +106,20 @@ object FStatistic: TFStatistic
   object pgcMain: TPageControl
     Left = 0
     Top = 0
-    Width = 704
+    Width = 772
     Height = 419
     ActivePage = tsGraphics
     Align = alClient
     TabOrder = 1
     OnChange = pgcMainChange
+    ExplicitWidth = 704
     object tsList: TTabSheet
       Caption = #1057#1087#1080#1089#1086#1082
+      ExplicitWidth = 696
       object dbgrdStatistic: TDBGrid
         Left = 0
         Top = 0
-        Width = 696
+        Width = 764
         Height = 391
         Align = alClient
         BorderStyle = bsNone
@@ -171,10 +175,11 @@ object FStatistic: TFStatistic
     object tsGraphics: TTabSheet
       Caption = #1043#1088#1072#1092#1110#1082#1080
       ImageIndex = 1
+      ExplicitWidth = 696
       object chtMain: TChart
         Left = 0
         Top = 0
-        Width = 696
+        Width = 764
         Height = 350
         AllowPanning = pmNone
         BackWall.Pen.Visible = False
@@ -239,6 +244,7 @@ object FStatistic: TFStatistic
         BevelWidth = 2
         Color = clWhite
         TabOrder = 0
+        ExplicitWidth = 696
         DefaultCanvas = 'TGDIPlusCanvas'
         ColorPaletteIndex = 19
         object brsrsFavouriteWebPages: TBarSeries
@@ -342,79 +348,93 @@ object FStatistic: TFStatistic
       object pnlLegend: TPanel
         Left = 0
         Top = 350
-        Width = 696
+        Width = 764
         Height = 41
         Align = alBottom
         BevelOuter = bvNone
         TabOrder = 1
+        ExplicitWidth = 696
+        DesignSize = (
+          764
+          41)
         object imgLegend1: TImage
           Left = 11
           Top = 12
           Width = 15
           Height = 15
+          Anchors = [akTop]
         end
         object imgLegend2: TImage
-          Left = 163
+          Left = 147
           Top = 14
           Width = 15
           Height = 15
+          Anchors = [akTop]
         end
         object imgLegend3: TImage
-          Left = 321
+          Left = 305
           Top = 12
           Width = 15
           Height = 15
+          Anchors = [akTop]
         end
         object imgLegend4: TImage
-          Left = 476
+          Left = 460
           Top = 14
           Width = 15
           Height = 15
+          Anchors = [akTop]
         end
         object imgLegend5: TImage
-          Left = 631
+          Left = 615
           Top = 12
           Width = 15
           Height = 15
+          Anchors = [akTop]
         end
         object lblLegend1: TLabel
           Left = 32
           Top = 14
-          Width = 120
+          Width = 29
           Height = 13
-          Caption = '12345678901234567890'
+          Anchors = [akTop]
+          Caption = #1087#1091#1089#1090#1086
           OnMouseMove = lblLegendMouseMove
         end
         object lblLegend2: TLabel
-          Left = 184
+          Left = 168
           Top = 14
-          Width = 120
+          Width = 29
           Height = 13
-          Caption = '12345678901234567890'
+          Anchors = [akTop]
+          Caption = #1087#1091#1089#1090#1086
           OnMouseMove = lblLegendMouseMove
         end
         object lblLegend3: TLabel
-          Left = 342
+          Left = 326
           Top = 14
-          Width = 120
+          Width = 29
           Height = 13
-          Caption = '12345678901234567890'
+          Anchors = [akTop]
+          Caption = #1087#1091#1089#1090#1086
           OnMouseMove = lblLegendMouseMove
         end
         object lblLegend4: TLabel
-          Left = 497
+          Left = 481
           Top = 14
-          Width = 120
+          Width = 29
           Height = 13
-          Caption = '12345678901234567890'
+          Anchors = [akTop]
+          Caption = #1087#1091#1089#1090#1086
           OnMouseMove = lblLegendMouseMove
         end
         object lblLegend5: TLabel
-          Left = 652
+          Left = 636
           Top = 14
-          Width = 120
+          Width = 29
           Height = 13
-          Caption = '12345678901234567890'
+          Anchors = [akTop]
+          Caption = #1087#1091#1089#1090#1086
           OnMouseMove = lblLegendMouseMove
         end
       end
