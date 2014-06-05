@@ -1,7 +1,7 @@
 object FPassChange: TFPassChange
   Left = 0
   Top = 0
-  BorderStyle = bsDialog
+  BorderStyle = bsToolWindow
   ClientHeight = 132
   ClientWidth = 153
   Color = clBtnFace

@@ -1,6 +1,7 @@
 object FCategoryList: TFCategoryList
   Left = 0
   Top = 0
+  BorderIcons = [biMinimize, biMaximize]
   BorderStyle = bsToolWindow
   Caption = #1057#1087#1080#1089#1086#1082' '#1110#1075#1085#1086#1088#1086#1074#1072#1085#1080#1093' '#1079#1072#1075#1086#1083#1086#1074#1082#1110#1074
   ClientHeight = 356

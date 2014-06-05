@@ -1,11 +1,12 @@
 object FSettings: TFSettings
   Left = 0
   Top = 0
+  BorderIcons = [biMinimize, biMaximize]
   BorderStyle = bsSizeToolWin
   Caption = 'Canalis - Settings'
   ClientHeight = 284
   ClientWidth = 333
-  Color = clBtnFace
+  Color = clBtnHighlight
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -23,9 +24,8 @@ object FSettings: TFSettings
     Width = 333
     Height = 62
     Align = alBottom
+    BevelOuter = bvNone
     TabOrder = 0
-    ExplicitTop = 290
-    ExplicitWidth = 323
     object btnApply: TBitBtn
       Left = 8
       Top = 34
@@ -54,9 +54,9 @@ object FSettings: TFSettings
       OnClick = btnPassChangeClick
     end
     object btnIgnoreListShow: TBitBtn
-      Left = 48
+      Left = 8
       Top = 3
-      Width = 233
+      Width = 314
       Height = 25
       Caption = #1057#1087#1080#1089#1086#1082' '#1082#1072#1090#1077#1075#1086#1088#1110#1081
       TabOrder = 3
@@ -120,7 +120,7 @@ object FSettings: TFSettings
   object rgStatisticTime: TRadioGroup
     Left = 8
     Top = 103
-    Width = 185
+    Width = 177
     Height = 105
     Caption = #1042#1088#1072#1093#1086#1074#1091#1074#1072#1090#1080' '#1089#1090#1072#1090#1080#1089#1090#1080#1082#1091' '#1079#1072':'
     ItemIndex = 1

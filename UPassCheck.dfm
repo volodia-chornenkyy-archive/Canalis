@@ -21,15 +21,15 @@ object FPassCheck: TFPassCheck
   object edtPassword: TEdit
     Left = 8
     Top = 8
-    Width = 217
+    Width = 226
     Height = 21
     TabOrder = 0
-    Text = 'edtPassword'
+    TextHint = #1042#1074#1077#1076#1110#1090#1100' '#1087#1072#1088#1086#1083#1100
     OnKeyDown = edtPasswordKeyDown
     OnKeyPress = edtPasswordKeyPress
   end
   object btnOK: TBitBtn
-    Left = 69
+    Left = 78
     Top = 35
     Width = 75
     Height = 25
@@ -38,7 +38,7 @@ object FPassCheck: TFPassCheck
     OnClick = btnOKClick
   end
   object btnClose: TBitBtn
-    Left = 150
+    Left = 159
     Top = 35
     Width = 75
     Height = 25
