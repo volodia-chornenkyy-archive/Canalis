@@ -44,7 +44,7 @@ begin
         mtWarning, mbYesNo, 0) = mrYes  then
     begin
       // If use lstCreatedcategory name of category.
-      AssignFile(vCategoryFile, 'data\category\' +
+      AssignFile(vCategoryFile,ExtractFilePath(ParamStr(0)) + 'data\category\' +
         lstCreatedCategory.Items[lstCreatedCategory.ItemIndex] + '.txt');
       Append(vCategoryFile);
       Writeln(vCategoryFile, FMain.qryStatistic.FieldByName('S_Title').AsString);
@@ -53,7 +53,8 @@ begin
     else
     begin
       // If use edtNewCategory name of category.
-      AssignFile(vCategoryFile, 'data\category\' + edtNewCategory.Text + '.txt');
+      AssignFile(vCategoryFile,ExtractFilePath(ParamStr(0)) + 'data\category\' +
+        edtNewCategory.Text + '.txt');
       Rewrite(vCategoryFile);
       Writeln(vCategoryFile, FMain.qryStatistic.FieldByName('S_Title').AsString);
       CloseFile(vCategoryFile);
@@ -61,7 +62,7 @@ begin
   else if (boolChoice = True) and (Length(edtNewCategory.Text) = 0) then
   begin
     // If choice from list box.
-    AssignFile(vCategoryFile, 'data\category\' +
+    AssignFile(vCategoryFile, ExtractFilePath(ParamStr(0)) + 'data\category\' +
       lstCreatedCategory.Items[lstCreatedCategory.ItemIndex] + '.txt');
     Append(vCategoryFile);
     Writeln(vCategoryFile, FMain.qryStatistic.FieldByName('S_Title').AsString);
@@ -70,9 +71,9 @@ begin
   else if (boolChoice = False) and (Length(edtNewCategory.Text) <> 0) then
   begin
     //If choice from edit.
-    AssignFile(vCategoryFile, 'data\category\' + edtNewCategory.Text + '.txt');
+    AssignFile(vCategoryFile, ExtractFilePath(ParamStr(0)) + 'data\category\' +
+      edtNewCategory.Text + '.txt');
     Rewrite(vCategoryFile);
-    ShowMessage('data\category\' + edtNewCategory.Text + '.txt');
     Writeln(vCategoryFile, FMain.qryStatistic.FieldByName('S_Title').AsString);
     CloseFile(vCategoryFile);
   end;

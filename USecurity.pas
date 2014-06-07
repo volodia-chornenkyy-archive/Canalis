@@ -34,7 +34,8 @@ begin
     WriteLn(f,vCode);
   end;
   CloseFile(f);
-  FileSetAttr(ExtractFilePath(ParamStr(0))+'version', faReadOnly or faHidden or faSysFile);
+  FileSetAttr(ExtractFilePath(ParamStr(0))+'version',
+    faReadOnly or faHidden or faSysFile);
 end;
 
 function DecodePassword(): string;

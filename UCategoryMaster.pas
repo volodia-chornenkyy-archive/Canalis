@@ -72,7 +72,8 @@ var
 begin
   if (Length(lbledtName.Text) <> 0) and (Length(lbledtKeyWord.Text) <> 0) then
   begin 
-    vFilePath := 'data\category\' + lbledtName.Text + '.txt';
+    vFilePath := ExtractFilePath(ParamStr(0)) + 'data\category\' +
+      lbledtName.Text + '.txt';
     if FileExists(vFilePath) = True then
     begin
       if MessageBox(handle, PChar('Категорія уже створена.' + #13 + 'Додати?'),

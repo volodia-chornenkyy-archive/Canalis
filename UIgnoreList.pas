@@ -56,7 +56,8 @@ procedure TFCategoryList.btnSaveClick(Sender: TObject);
 begin
   if blSaveCheck = False then
   begin
-    lstIgnoreList.Items.SaveToFile('data\Ignore.lst');
+    lstIgnoreList.Items.SaveToFile(
+      ExtractFilePath(ParamStr(0)) + 'data\Ignore.lst');
     blSaveCheck := True;
     MessageBox(handle, PChar('Список збережений.'),
       PChar(''), MB_OK+MB_ICONWARNING);
@@ -68,9 +69,11 @@ begin
   btnSave.Click;
 
   if cbbCategory.ItemIndex = 0 then
-    lstIgnoreList.Items.LoadFromFile('data\Ignore.lst')
+    lstIgnoreList.Items.LoadFromFile(
+      ExtractFilePath(ParamStr(0)) + 'data\Ignore.lst')
   else
-    lstIgnoreList.Items.LoadFromFile('data\category\' +
+    lstIgnoreList.Items.LoadFromFile(
+      ExtractFilePath(ParamStr(0)) + 'data\category\' +
       cbbCategory.Items[cbbCategory.ItemIndex] + '.txt');
 end;
 
@@ -78,7 +81,8 @@ procedure TFCategoryList.FormShow;
 var
   sr: TSearchRec;
 begin
-  lstIgnoreList.Items.LoadFromFile('data\Ignore.lst');
+  lstIgnoreList.Items.LoadFromFile(
+    ExtractFilePath(ParamStr(0)) + 'data\Ignore.lst');
   cbbCategory.Items.Add('Ігноровані заголовки');
   cbbCategory.ItemIndex := 0;
 

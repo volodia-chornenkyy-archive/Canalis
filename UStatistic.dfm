@@ -26,7 +26,6 @@ object FStatistic: TFStatistic
     Color = clBtnHighlight
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 704
     DesignSize = (
       772
       46)
@@ -83,7 +82,6 @@ object FStatistic: TFStatistic
       Caption = #1053#1072#1083#1072#1096#1090#1091#1074#1072#1085#1085#1103
       TabOrder = 2
       OnClick = btnSettingsClick
-      ExplicitLeft = 613
     end
     object cbbUsers: TComboBox
       Left = 252
@@ -112,10 +110,12 @@ object FStatistic: TFStatistic
     Align = alClient
     TabOrder = 1
     OnChange = pgcMainChange
-    ExplicitWidth = 704
     object tsList: TTabSheet
       Caption = #1057#1087#1080#1089#1086#1082
+      ExplicitLeft = 0
+      ExplicitTop = 0
       ExplicitWidth = 696
+      ExplicitHeight = 0
       object dbgrdStatistic: TDBGrid
         Left = 0
         Top = 0
@@ -175,7 +175,6 @@ object FStatistic: TFStatistic
     object tsGraphics: TTabSheet
       Caption = #1043#1088#1072#1092#1110#1082#1080
       ImageIndex = 1
-      ExplicitWidth = 696
       object chtMain: TChart
         Left = 0
         Top = 0
@@ -244,7 +243,6 @@ object FStatistic: TFStatistic
         BevelWidth = 2
         Color = clWhite
         TabOrder = 0
-        ExplicitWidth = 696
         DefaultCanvas = 'TGDIPlusCanvas'
         ColorPaletteIndex = 19
         object brsrsFavouriteWebPages: TBarSeries
@@ -353,7 +351,6 @@ object FStatistic: TFStatistic
         Align = alBottom
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitWidth = 696
         DesignSize = (
           764
           41)

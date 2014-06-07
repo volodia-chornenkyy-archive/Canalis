@@ -42,7 +42,8 @@ begin
   begin
     if vOldPass = DecodePassword() then
     begin
-      FileSetAttr('version', not(faReadOnly or faHidden or faSysFile));
+      FileSetAttr(ExtractFilePath(ParamStr(0)) + 'version',
+        not(faReadOnly or faHidden or faSysFile));
       USecurity.CodePassword(vEnteredNewPass);
       FPassChange.Close;
     end

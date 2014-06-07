@@ -22,8 +22,6 @@ object FAddToCategory: TFAddToCategory
     Height = 13
     Align = alTop
     Caption = #1057#1090#1074#1086#1088#1077#1085#1110' '#1082#1072#1090#1077#1075#1086#1088#1110#1111
-    ExplicitLeft = 8
-    ExplicitTop = 8
     ExplicitWidth = 93
   end
   object lblNewCategory: TLabel
@@ -33,8 +31,6 @@ object FAddToCategory: TFAddToCategory
     Height = 13
     Align = alTop
     Caption = #1057#1090#1074#1086#1088#1080#1090#1080' '#1082#1072#1090#1077#1075#1086#1088#1110#1102
-    ExplicitLeft = 8
-    ExplicitTop = 335
     ExplicitWidth = 104
   end
   object lstCreatedCategory: TListBox
@@ -46,7 +42,6 @@ object FAddToCategory: TFAddToCategory
     ItemHeight = 13
     TabOrder = 0
     OnClick = lstCreatedCategoryClick
-    ExplicitTop = 8
   end
   object edtNewCategory: TEdit
     Left = 0
@@ -56,8 +51,6 @@ object FAddToCategory: TFAddToCategory
     Align = alTop
     TabOrder = 1
     TextHint = #1042#1074#1077#1076#1110#1090#1100' '#1085#1072#1079#1074#1091' '#1085#1086#1074#1086#1111' '#1082#1072#1090#1077#1075#1086#1088#1110#1111
-    ExplicitLeft = -1
-    ExplicitTop = 53
   end
   object pnlButtons: TPanel
     Left = 0
@@ -85,7 +78,6 @@ object FAddToCategory: TFAddToCategory
       Caption = #1042#1080#1076#1072#1083#1080#1090#1080
       TabOrder = 1
       OnClick = btnSaveClick
-      ExplicitLeft = 139
     end
   end
 end

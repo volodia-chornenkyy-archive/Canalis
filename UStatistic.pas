@@ -221,7 +221,8 @@ begin
       // Change title to user-category.
         for j := 0 to vCategoryList.Count - 1 do
         begin
-          AssignFile(vCategoryFile, 'data\category\' + vCategoryList[j]);
+          AssignFile(vCategoryFile,
+            ExtractFilePath(ParamStr(0)) + 'data\category\' + vCategoryList[j]);
           Reset(vCategoryFile);
           while not(Eof(vCategoryFile)) do
           begin
@@ -458,10 +459,10 @@ var
   vStringList: TStringList;
   vSqlQuery: string;
 begin
-  if FileExists('data\Ignore.lst') then
+  if FileExists(ExtractFilePath(ParamStr(0)) + 'data\Ignore.lst') then
   begin
     vStringList := TStringList.Create;
-    vStringList.LoadFromFile('data\Ignore.lst');
+    vStringList.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'data\Ignore.lst');
     vListLength := vStringList.Count-1;
     for i:=0 to vListLength do
     begin
@@ -723,8 +724,8 @@ procedure TFStatistic.pmiAddToSkipListClick(Sender: TObject);
 var
   vFileIgnoreList: TextFile;
 begin
-  AssignFile(vFileIgnoreList, 'data\Ignore.lst');
-  if FileExists('data\Ignore.lst') then
+  AssignFile(vFileIgnoreList, ExtractFilePath(ParamStr(0)) + 'data\Ignore.lst');
+  if FileExists(ExtractFilePath(ParamStr(0)) + 'data\Ignore.lst') then
     Append(vFileIgnoreList)
   else
   begin
