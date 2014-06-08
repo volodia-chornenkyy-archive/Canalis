@@ -100,6 +100,18 @@ begin
   Result := ss + (mm * 60) + (hh * 3600);
 end;
 
+function SecondToStr(ss: Integer): string;
+var
+  d,h,m,s:Integer;
+begin
+  Result := '';
+  d := ss div 86400;
+  h := (ss - d * 86400) div 3600;
+  m := (ss - d * 86400 - h * 3600) div 60;
+  s := ss - d * 86400 - h * 3600 - m * 60;
+  Result := IntToStr(d)+'д'+IntToStr(h)+'год'+IntToStr(m)+'хв'+IntToStr(s)+'сек';
+end;
+
 // Convert seconds to time variable.
 function SecondToTime(ss: Integer): TTime;
 var
@@ -264,7 +276,7 @@ begin
       begin
         vLegendColor := GetRandomColor();
         brsrsLongestUsageApp.AddBar(AData[i].FTime,
-          (TimeToStr(SecondToTime(AData[i].FTime)) + ' (' +
+          (SecondToStr(AData[i].FTime) + #13+'(' +
             IntToStr(AData[i].FTime) +'cек)'),vLegendColor);
         case i of
           0: FillLegend(imgLegend1,vLegendColor,lblLegend1,AData[i].FTitle);
@@ -349,7 +361,7 @@ begin
     begin
       vLegendColor := GetRandomColor();
       brsrsFavouriteWebPages.AddBar(AData[i].FTime,
-        (TimeToStr(SecondToTime(AData[i].FTime)) + ' (' +
+        (SecondToStr(AData[i].FTime) + #13 + '(' +
           IntToStr(AData[i].FTime) +'cек)'),vLegendColor);
       case i of
         0: FillLegend(imgLegend1,vLegendColor,lblLegend1,AData[i].FTitle);
@@ -425,7 +437,7 @@ begin
         begin
           vLegendColor := GetRandomColor();
           psrsUserTime.AddPie(AData[i].FTime,
-          (TimeToStr(SecondToTime(AData[i].FTime)) + ' (' +
+          (SecondToStr(AData[i].FTime) + #13 + '(' +
             IntToStr(AData[i].FTime) +'cек)'),vLegendColor);
           case j of
             0: FillLegend(imgLegend1,vLegendColor,lblLegend1,AData[i].FTitle);
