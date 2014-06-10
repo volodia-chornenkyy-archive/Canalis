@@ -167,9 +167,9 @@ begin
       'Persist Security Info=False';
   conStatistic.Connected := True;
 
-  qryStatistic.SQL.Clear;
+  {qryStatistic.SQL.Clear;
   qryStatistic.SQL.Add('SELECT * FROM Statistic');
-  qryStatistic.Active:=True;
+  qryStatistic.Active:=True; }
 
   trayMain.PopupMenu := pmTray;
 
@@ -248,7 +248,9 @@ begin
     if Length(vTitle) > 255 then
       vTitle := Copy(vTitle, 0, 250);
     Result := vTitle;
-  end;
+  end
+  else
+    Result := '';
 end;
 
 // Delete symbols to avoid SQL errors.
@@ -270,7 +272,7 @@ begin
   if WorkEnabled then
   begin
     // Add new entry only if previous title not the same as current.
-    if (vCurrentTitle <> vPrevTitle) then
+    if (vCurrentTitle <> vPrevTitle) and (vCurrentTitle <> '') then
     begin
       vPrevTitle := vCurrentTitle;
 
