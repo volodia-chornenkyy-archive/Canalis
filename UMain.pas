@@ -245,8 +245,8 @@ begin
     vLen := GetWindowTextLength(vHandle) + 1;
     SetLength(vTitle, vLen);
     GetWindowText(vHandle, PChar(vTitle), vLen);
-    if Length(vTitle) > 255 then
-      vTitle := Copy(vTitle, 0, 250);
+    if Length(vTitle) >= 255 then
+      vTitle := Copy(vTitle, 0, 254);
     Result := vTitle;
   end
   else
