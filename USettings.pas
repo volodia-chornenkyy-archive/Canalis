@@ -42,8 +42,7 @@ type
 
 var
   FSettings: TFSettings;
-  boolChange: Boolean;
-
+  boolSettingsChange: Boolean = False;
 implementation
 
 uses UPassChange, UMain, USecurity, UStatistic, UIgnoreList;
@@ -68,7 +67,7 @@ begin
     WriteBool('Settings','3DGraphs',chkGraph3d.Checked);
   end;
   IniFile.Free;
-  boolChange := False;
+  boolSettingsChange := False;
 end;
 
 procedure TFSettings.GetIniSettings;
@@ -86,12 +85,12 @@ begin
   rgStatisticTime.ItemIndex := IniFile.ReadInteger('Settings','StatisticTime',1);
   chkGraph3d.Checked := IniFile.ReadBool('Settings','3DGraphs',False);
   IniFile.Free;
-  boolChange := False;
+  boolSettingsChange := False;
 end;
 
 procedure TFSettings.rgStatisticTimeClick(Sender: TObject);
 begin
-  boolChange := True;
+  boolSettingsChange := True;
 end;
 
 procedure TFSettings.Autorun(Flag:boolean; NameParam, Path:String);
@@ -117,17 +116,17 @@ begin
   end
   else
     chklstBrowser.Enabled := False;
-  boolChange := True;
+  boolSettingsChange := True;
 end;
 
 procedure TFSettings.chkClick(Sender: TObject);
 begin
-  boolChange := True;
+  boolSettingsChange := True;
 end;
 
 procedure TFSettings.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  if boolChange then
+  if boolSettingsChange then
   if MessageDlg('«берегти налашуванн€?',mtConfirmation,mbYesNo,0) = mrYes then
     btnApply.Click
   else

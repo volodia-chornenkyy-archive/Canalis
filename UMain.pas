@@ -167,15 +167,12 @@ begin
       'Persist Security Info=False';
   conStatistic.Connected := True;
 
-  {qryStatistic.SQL.Clear;
-  qryStatistic.SQL.Add('SELECT * FROM Statistic');
-  qryStatistic.Active:=True; }
+  qryStatistic.Active:=True;
 
   trayMain.PopupMenu := pmTray;
 
   WorkTime := StrToTime('0:00:01');
   SetLength(AWorkTime, 100);
-
 
   // Start work.
   tmrMain.Enabled := True;

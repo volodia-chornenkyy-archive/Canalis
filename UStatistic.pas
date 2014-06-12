@@ -79,6 +79,7 @@ type
   end;
 var
   AData: array of TGraphData;
+  boolChanges: Boolean = True;
 
 implementation
 
@@ -514,6 +515,10 @@ var
   vDate: TDate;
   i:Integer;
 begin
+  boolChanges := True;
+  MessageBox(handle, PChar('Виконуються обробка даних.'+#13+
+    'Зачекайте] будь-ласка.'),PChar(''), MB_ICONWARNING+MB_OK);
+
   if FMain.qryStatistic.Active then
     FMain.qryStatistic.Active := False;
   FMain.qryStatistic.SQL.Clear;
@@ -558,6 +563,7 @@ begin
   end;
   FMain.qryStatistic.Prepared := True;
   FMain.qryStatistic.Active := True;
+
   if (dbgrdStatistic.DataSource.DataSet.RecordCount = 0)
     and (FSettings.Visible = False) then
     MessageBox(handle, PChar('Даних за вибраний проміжок немає'),
@@ -661,8 +667,9 @@ procedure TFStatistic.cbbVisionChoiceChange(Sender: TObject);
 var
   vItemChoice:Byte;
 begin
+  MessageBox(handle, PChar('Виконуються обробка даних.'+#13+
+    'Зачекайте будь-ласка.'),PChar(''), MB_ICONWARNING+MB_OK);
   vItemChoice := cbbVisionChoice.ItemIndex;
-  BetweenQuery;
   if (cbbUsers.Items.Count <> 0)
     and (cbbVisionChoice.Items[vItemChoice] <> 'Користувачі') then
   begin
@@ -695,6 +702,12 @@ begin
     5: ShowFiveFavouriteWebPages(Copy(cbbVisionChoice.Items[5],
         Pos('- ',cbbVisionChoice.Items[5])+2,
           Length(cbbVisionChoice.Items[5])-Pos('- ',cbbVisionChoice.Items[5])+1));
+  end;
+  if Length(edtSearch.Text) <> 0 then
+  begin
+    chtMain.Title.Text.Clear;
+    chtMain.Title.Text.Append('Найбільш популярні вкладки по запиту' +
+      edtSearch.Text);
   end;
   cbbVisionChoice.ItemIndex := vItemChoice;
 end;
@@ -729,7 +742,8 @@ begin
   else
     FSettings.SetIniSettings;
   StatisticStartup();
-  dtpMainChange(nil);
+  cbbVisionChoice.ItemIndex := 0;
+  BetweenQuery();
 end;
 
 procedure TFStatistic.pmiAddToSkipListClick(Sender: TObject);
@@ -770,7 +784,6 @@ begin
       cbbVisionChoice.Visible := False;
       lblVisionChoice.Visible := False;
       edtSearch.Visible := True;
-      BetweenQuery;
     end;
     1:
     if dbgrdStatistic.DataSource.DataSet.RecordCount <> 0 then
@@ -778,7 +791,11 @@ begin
       cbbVisionChoice.Visible := True;
       lblVisionChoice.Visible := True;
       edtSearch.Visible := False;
-      cbbVisionChoiceChange(nil);
+      if boolChanges then
+      begin
+        boolChanges := False;
+        cbbVisionChoiceChange(nil);
+      end;
     end;
   end;
 end;
