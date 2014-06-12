@@ -514,9 +514,12 @@ procedure TFStatistic.BetweenQuery;
 var
   vDate: TDate;
   i:Integer;
+  vOldFormTitle: string;
 begin
   boolChanges := True;
-
+  vOldFormTitle := FStatistic.Caption;
+  FStatistic.Caption := 'Обробка даних';
+  FStatistic.Enabled := False;
   if FMain.qryStatistic.Active then
     FMain.qryStatistic.Active := False;
   FMain.qryStatistic.SQL.Clear;
@@ -571,6 +574,8 @@ begin
     MessageBox(handle, PChar('Даних за вибраний проміжок немає'),
       PChar(''), MB_ICONWARNING+MB_OK);
   FMain.qryStatistic.First;
+  FStatistic.Caption := vOldFormTitle;
+  FStatistic.Enabled := True;
 end;
 
 procedure RemoveStringListDuplicates(const stringList : TStringList) ;
@@ -668,9 +673,13 @@ end;
 procedure TFStatistic.cbbVisionChoiceChange(Sender: TObject);
 var
   vItemChoice:Byte;
+  vOldFormTitle: string;
 begin
   MessageBox(handle, PChar('Виконуються обробка даних.'+#13+
     'Зачекайте будь-ласка.'),PChar(''), MB_ICONWARNING+MB_OK);
+  vOldFormTitle := FStatistic.Caption;
+  FStatistic.Caption := 'Обробка даних';
+  FStatistic.Enabled := False;
   vItemChoice := cbbVisionChoice.ItemIndex;
   if (cbbUsers.Items.Count <> 0)
     and (cbbVisionChoice.Items[vItemChoice] <> 'Користувачі') then
@@ -712,6 +721,8 @@ begin
       edtSearch.Text);
   end;
   cbbVisionChoice.ItemIndex := vItemChoice;
+  FStatistic.Caption := vOldFormTitle;
+  FStatistic.Enabled := True;
 end;
 
 procedure TFStatistic.cbbUsersChange(Sender: TObject);
