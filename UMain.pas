@@ -184,6 +184,8 @@ begin
   begin
     // Stop working whem Statistic showing.
     WorkEnabled := False;
+    MessageBox(handle, PChar('Виконуються обробка даних.'+#13+
+      'Зачекайте будь-ласка.'),PChar(''), MB_ICONWARNING+MB_OK);
     FStatistic.Show;
   end
   else

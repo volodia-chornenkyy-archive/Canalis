@@ -516,8 +516,6 @@ var
   i:Integer;
 begin
   boolChanges := True;
-  MessageBox(handle, PChar('Виконуються обробка даних.'+#13+
-    'Зачекайте] будь-ласка.'),PChar(''), MB_ICONWARNING+MB_OK);
 
   if FMain.qryStatistic.Active then
     FMain.qryStatistic.Active := False;
@@ -535,6 +533,7 @@ begin
     FMain.qryStatistic.SQL.Add(' AND (S_Title LIKE ''%' + edtSearch.Text + '%'')');
   FMain.qryStatistic.SQL.Add('ORDER BY S_StartDate DESC');
   vDate := dtpMain.Date;
+  // Start-End date filter.
   if FSettings.rgStatisticTime.ItemIndex = 0 then
   begin
     // Term - day.
@@ -555,11 +554,14 @@ begin
     // Term - month.
     FMain.qryStatistic.Parameters.ParamByName('SDate').Value :=
       DateToStr(EncodeDate(CustomDateDecode(vDate,0),
-        CustomDateDecode(vDate,1)-1,DaysInMonth(CustomDateDecode(vDate,0),
-          CustomDateDecode(vDate,1)-1)));
-    Fmain.qryStatistic.Parameters.ParamByName('FDate').Value :=
-      DateToStr(EncodeDate(CustomDateDecode(vDate,0),
-        CustomDateDecode(vDate,1)+1,1));
+        CustomDateDecode(vDate,1),1));
+    if CustomDateDecode(vDate,1) <> 12 then
+      Fmain.qryStatistic.Parameters.ParamByName('FDate').Value :=
+        DateToStr(EncodeDate(CustomDateDecode(vDate,0),
+          CustomDateDecode(vDate,1)+1,1))
+    else
+      FMain.qryStatistic.Parameters.ParamByName('SDate').Value :=
+        DateToStr(EncodeDate(CustomDateDecode(vDate,0)+1,1,1));
   end;
   FMain.qryStatistic.Prepared := True;
   FMain.qryStatistic.Active := True;
@@ -720,8 +722,14 @@ end;
 
 procedure TFStatistic.dtpMainChange(Sender: TObject);
 begin
-  cbbVisionChoice.ItemIndex := 0;
-  cbbVisionChoiceChange(nil);
+  case pgcMain.TabIndex of
+    0: BetweenQuery();
+    1:
+    begin
+      cbbVisionChoice.ItemIndex := 0;
+      cbbVisionChoiceChange(nil);
+    end;
+  end;
 end;
 
 procedure TFStatistic.edtSearchChange(Sender: TObject);

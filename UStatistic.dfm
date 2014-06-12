@@ -114,7 +114,6 @@ object FStatistic: TFStatistic
     OnChange = pgcMainChange
     object tsList: TTabSheet
       Caption = #1057#1087#1080#1089#1086#1082
-      ExplicitHeight = 391
       object dbgrdStatistic: TDBGrid
         Left = 0
         Top = 0
@@ -174,7 +173,6 @@ object FStatistic: TFStatistic
     object tsGraphics: TTabSheet
       Caption = #1043#1088#1072#1092#1110#1082#1080
       ImageIndex = 1
-      ExplicitHeight = 391
       object chtMain: TChart
         Left = 0
         Top = 0
@@ -243,7 +241,6 @@ object FStatistic: TFStatistic
         BevelWidth = 2
         Color = clWhite
         TabOrder = 0
-        ExplicitHeight = 350
         DefaultCanvas = 'TGDIPlusCanvas'
         ColorPaletteIndex = 19
         object brsrsFavouriteWebPages: TBarSeries
@@ -352,7 +349,6 @@ object FStatistic: TFStatistic
         Align = alBottom
         BevelOuter = bvNone
         TabOrder = 1
-        ExplicitTop = 350
         DesignSize = (
           764
           41)

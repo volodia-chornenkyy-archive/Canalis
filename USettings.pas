@@ -127,10 +127,10 @@ end;
 procedure TFSettings.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   if boolSettingsChange then
-  if MessageDlg('Зберегти налашування?',mtConfirmation,mbYesNo,0) = mrYes then
-    btnApply.Click
-  else
-    GetIniSettings;
+    if MessageDlg('Зберегти налашування?',mtConfirmation,mbYesNo,0) = mrYes then
+      btnApply.Click()
+    else
+      GetIniSettings;
   if chkAutorun.Checked then
     Autorun(True,'Canalis',Application.ExeName)
   else
@@ -169,7 +169,11 @@ begin
   SetIniSettings;
   if Assigned(FStatistic) then
     FStatistic.cbbVisionChoiceChange(nil);
-  MessageBox(handle, PChar('Налаштування успішно збережені'),PChar(''), MB_ICONINFORMATION+MB_OK);
+  MessageBox(handle, PChar('Налаштування успішно збережені'),
+    PChar(''), MB_ICONINFORMATION+MB_OK);
+  FStatistic.BetweenQuery();
+  if FStatistic.pgcMain.TabIndex = 1 then
+    FStatistic.cbbVisionChoiceChange(nil);
   Close;
 end;
 
