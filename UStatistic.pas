@@ -685,7 +685,7 @@ begin
     0: ShowFiveLongestUsageApp;
     1:
       if cbbVisionChoice.Items[1] = 'Користувачі' then
-        ShowUserTimeUsed
+        ShowUserTimeUsed()
       else
         ShowFiveFavouriteWebPages(Copy(cbbVisionChoice.Items[1],
           Pos('- ',cbbVisionChoice.Items[1])+2,
@@ -722,14 +722,12 @@ end;
 
 procedure TFStatistic.dtpMainChange(Sender: TObject);
 begin
-  case pgcMain.TabIndex of
-    0: BetweenQuery();
-    1:
-    begin
-      cbbVisionChoice.ItemIndex := 0;
-      cbbVisionChoiceChange(nil);
-    end;
-  end;
+  BetweenQuery();
+  if pgcMain.TabIndex = 1 then
+  begin
+    cbbVisionChoice.ItemIndex := 0;
+    cbbVisionChoiceChange(nil);
+  end;;
 end;
 
 procedure TFStatistic.edtSearchChange(Sender: TObject);
@@ -767,7 +765,8 @@ begin
     Writeln(vFileIgnoreList, '');
     Writeln(vFileIgnoreList, 'Program Manager');
   end;
-  writeln(vFileIgnoreList, dbgrdStatistic.DataSource.DataSet.FieldByName('S_Title').AsString);
+  writeln(vFileIgnoreList,
+    dbgrdStatistic.DataSource.DataSet.FieldByName('S_Title').AsString);
   CloseFile(vFileIgnoreList);
   if FSettings.chkFiltered.Checked then
     BetweenQuery;

@@ -14,7 +14,6 @@ object FSettings: TFSettings
   Font.Style = []
   OldCreateOrder = False
   Position = poDesktopCenter
-  OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -57,7 +56,7 @@ object FSettings: TFSettings
     end
     object btnClose: TBitBtn
       Left = 5
-      Top = 51
+      Top = 58
       Width = 156
       Height = 25
       Caption = #1047#1072#1082#1088#1080#1090#1080

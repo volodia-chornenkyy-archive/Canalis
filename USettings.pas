@@ -22,7 +22,6 @@ type
     procedure chkClick(Sender: TObject);
     procedure btnIgnoreListShowClick(Sender: TObject);
     procedure btnPassChangeClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
     procedure Autorun(Flag:boolean; NameParam, Path:String);
@@ -96,21 +95,6 @@ begin
   boolSettingsChange := True;
 end;
 
-procedure TFSettings.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  if boolSettingsChange then
-    if MessageDlg('Зберегти налашування?',mtConfirmation,mbYesNo,0) = mrYes then
-    begin
-      SetIniSettings();
-      if chkAutorun.Checked then
-        Autorun(True,'Canalis',Application.ExeName)
-      else
-        Autorun(False,'Canalis',Application.ExeName);
-    end
-    else
-      GetIniSettings();
-end;
-
 procedure TFSettings.FormShow(Sender: TObject);
 begin
   if FileExists(ExtractFilePath(ParamStr(0))+'Settings.ini') then
@@ -121,14 +105,22 @@ end;
 
 procedure TFSettings.btnCloseClick(Sender: TObject);
 begin
-  SetIniSettings;
-  if Assigned(FStatistic) then
-    FStatistic.cbbVisionChoiceChange(nil);
-  MessageBox(handle, PChar('Налаштування успішно збережені'),
-    PChar(''), MB_ICONINFORMATION+MB_OK);
-  FStatistic.BetweenQuery();
-  if FStatistic.pgcMain.TabIndex = 1 then
-    FStatistic.cbbVisionChoiceChange(nil);
+  if boolSettingsChange then
+    if MessageDlg('Зберегти налашування?',mtConfirmation,mbYesNo,0) = mrYes then
+    begin
+      SetIniSettings();
+      if chkAutorun.Checked then
+        Autorun(True,'Canalis',Application.ExeName)
+      else
+        Autorun(False,'Canalis',Application.ExeName);
+      MessageBox(handle, PChar('Налаштування успішно збережені'),
+      PChar(''), MB_ICONINFORMATION+MB_OK);
+      FStatistic.BetweenQuery();
+      if FStatistic.pgcMain.TabIndex = 1 then
+        FStatistic.cbbVisionChoiceChange(nil);
+    end
+    else
+      GetIniSettings();
   Close;
 end;
 
