@@ -19,7 +19,6 @@ type
     rgStatisticTime: TRadioGroup;
     chkGraph3d: TCheckBox;
     procedure btnRestoreClick(Sender: TObject);
-    procedure chbBrowserHistoryClick(Sender: TObject);
     procedure chkClick(Sender: TObject);
     procedure btnIgnoreListShowClick(Sender: TObject);
     procedure btnPassChangeClick(Sender: TObject);
@@ -52,11 +51,6 @@ begin
   IniFile := TIniFile.Create(ExtractFilePath(ParamStr(0))+'Settings.ini');
   with IniFile do
   begin
-    WriteBool('SkipedBrowsers','enabled',chbBrowserHistory.Checked);
-    WriteBool('SkipedBrowsers','chrome',chklstBrowser.Checked[0]);
-    WriteBool('SkipedBrowsers','firefox',chklstBrowser.Checked[1]);
-    WriteBool('SkipedBrowsers','opera',chklstBrowser.Checked[2]);
-    WriteBool('SkipedBrowsers','ie',chklstBrowser.Checked[3]);
     WriteBool('Settings','IgnoreList',chkFiltered.Checked);
     WriteBool('Settings','Autorun',chkAutorun.Checked);
     WriteInteger('Settings','StatisticTime',rgStatisticTime.ItemIndex);
@@ -71,11 +65,6 @@ var
   IniFile: TIniFile;
 begin
   IniFile := TIniFile.Create(ExtractFilePath(ParamStr(0))+'Settings.ini');
-  chbBrowserHistory.Checked := IniFile.ReadBool('SkipedBrowsers','enabled',False);
-  chklstBrowser.Checked[0] := IniFile.ReadBool('SkipedBrowsers','chrome',False);
-  chklstBrowser.Checked[1] := IniFile.ReadBool('SkipedBrowsers','chrome',False);
-  chklstBrowser.Checked[2] := IniFile.ReadBool('SkipedBrowsers','chrome',False);
-  chklstBrowser.Checked[3] := IniFile.ReadBool('SkipedBrowsers','chrome',False);
   chkFiltered.Checked := IniFile.ReadBool('Settings','IgnoreList',True);
   chkAutorun.Checked := IniFile.ReadBool('Settings','Autorun',True);
   rgStatisticTime.ItemIndex := IniFile.ReadInteger('Settings','StatisticTime',1);
@@ -102,19 +91,6 @@ begin
   Reg.Free;
 end;
 
-procedure TFSettings.chbBrowserHistoryClick(Sender: TObject);
-var
-  i: integer;
-begin
-  if chbBrowserHistory.Checked then
-  begin
-    chklstBrowser.Enabled := True;
-  end
-  else
-    chklstBrowser.Enabled := False;
-  boolSettingsChange := True;
-end;
-
 procedure TFSettings.chkClick(Sender: TObject);
 begin
   boolSettingsChange := True;
@@ -124,13 +100,15 @@ procedure TFSettings.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   if boolSettingsChange then
     if MessageDlg('«берегти налашуванн€?',mtConfirmation,mbYesNo,0) = mrYes then
-      btnApply.Click()
+    begin
+      SetIniSettings();
+      if chkAutorun.Checked then
+        Autorun(True,'Canalis',Application.ExeName)
+      else
+        Autorun(False,'Canalis',Application.ExeName);
+    end
     else
-      GetIniSettings;
-  if chkAutorun.Checked then
-    Autorun(True,'Canalis',Application.ExeName)
-  else
-    Autorun(False,'Canalis',Application.ExeName);
+      GetIniSettings();
 end;
 
 procedure TFSettings.FormShow(Sender: TObject);
