@@ -64,7 +64,7 @@ var
 
 implementation
 
-uses USettings, UStatistic, USecurity, UIniFile;
+uses USettings, UStatistic, USecurity;
 
 {$R *.dfm}
 

@@ -32,9 +32,11 @@ uses UMain, UStatistic;
 procedure TFCategoryMaster.CategoryCreate(operationWithFile: string;
                                           pathFile: string);
 var
-  vCategoryFile: TextFile;
   vDate: TDate;
-  i: integer;
+  i,j: integer;
+  vCategoryList: TStringList;
+  vFileContent: TStringList;
+  vWriteCheck: Boolean;
 begin
   FMain.qryStatistic.Active := False;
 
@@ -45,24 +47,37 @@ begin
   FMain.qryStatistic.Prepared := True;
   FMain.qryStatistic.Active := True;
 
-  AssignFile(vCategoryFile, pathFile);
-  if operationWithFile = 'rewrite' then
-    Rewrite(vCategoryFile)
-  else if operationWithFile = 'append' then
-    Append(vCategoryFile);
-
   FMain.qryStatistic.First;
+  vCategoryList := TStringList.Create;
   for i:=0  to  FStatistic.dbgrdStatistic.DataSource.DataSet.RecordCount-1 do
   begin
-    Writeln(vCategoryFile,
-      FMain.qryStatistic.FieldByName('S_Title').AsString);
+    vCategoryList.Add(FMain.qryStatistic.FieldByName('S_Title').AsString);
     FMain.qryStatistic.Next;
   end;
+  FStatistic.RemoveStringListDuplicates(vCategoryList);
 
-  CloseFile(vCategoryFile);
+  if operationWithFile = 'rewrite' then
+    vCategoryList.SaveToFile(pathFile)
+  else if operationWithFile = 'append' then
+  begin
+    vFileContent := TStringList.Create;
+    vFileContent.LoadFromFile(pathFile);
+    for i := 0 to vCategoryList.Count-1 do
+    begin
+      vWriteCheck := True;
+      for j := 0 to vFileContent.Count-1 do
+      begin
+        if vCategoryList[i] = vFileContent[j] then
+          vWriteCheck := False;
+      end;
+      vFileContent.Add(vCategoryList[i]);
+    end;
+    vFileContent.SaveToFile(pathFile);
+    vFileContent.Free;
+  end;
 
+  vCategoryList.Free;
   FStatistic.BetweenQuery;
-
   FCategoryMaster.Close;
 end;
 
@@ -77,14 +92,14 @@ begin
     if FileExists(vFilePath) = True then
     begin
       if MessageBox(handle, PChar('Категорія уже створена.' + #13 + 'Додати?'),
-        PChar('Помилка'), MB_ICONWARNING+MB_YESNO) = IDYES then 
-        CategoryCreate('append',vFilePath) 
+        PChar('Помилка'), MB_ICONWARNING+MB_YESNO) = IDYES then
+        CategoryCreate('append',vFilePath)
       else if MessageBox(handle, PChar('Категорія буде перезаписана.'),
-        PChar('Попередження'), MB_ICONWARNING+MB_YESNO) = IDYES then 
+        PChar('Попередження'), MB_ICONWARNING+MB_YESNO) = IDYES then
         CategoryCreate('rewrite',vFilePath);
     end
     else
-      CategoryCreate('rewrite', vFilePath);
+      CategoryCreate('rewrite',vFilePath);
   end
   else
     MessageBox(handle, PChar('Заповність усі поля'),

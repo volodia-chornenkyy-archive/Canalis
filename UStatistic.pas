@@ -64,6 +64,7 @@ type
     function CustomDateDecode(date: TDate; resultType:Byte):Word;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure edtSearchChange(Sender: TObject);
+    procedure RemoveStringListDuplicates(const stringList : TStringList);
   private
     { Private declarations }
   public
@@ -566,7 +567,7 @@ begin
   FStatistic.Enabled := True;
 end;
 
-procedure RemoveStringListDuplicates(const stringList : TStringList) ;
+procedure TFStatistic.RemoveStringListDuplicates(const stringList : TStringList);
 var
   buffer: TStringList;
   cnt: Integer;
