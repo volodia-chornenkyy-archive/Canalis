@@ -112,6 +112,10 @@ object FStatistic: TFStatistic
     OnChange = pgcMainChange
     object tsList: TTabSheet
       Caption = #1057#1087#1080#1089#1086#1082
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object dbgrdStatistic: TDBGrid
         Left = 0
         Top = 0

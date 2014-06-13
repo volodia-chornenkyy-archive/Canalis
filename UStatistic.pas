@@ -483,18 +483,6 @@ begin
     end;
     vStringList.Free;
   end;
-
-  if FSettings.chbBrowserHistory.Checked then
-  for i := 0 to FSettings.chklstBrowser.Count-1 do
-  begin
-    if FSettings.chklstBrowser.Checked[i] then
-    case i of
-      0: Result := Result + ' AND (S_title NOT LIKE ''%Google Chrome'')';
-      1: Result := Result + ' AND (S_title NOT LIKE ''%Mozilla Firefox'')';
-      2: Result := Result + ' AND (S_title NOT LIKE ''%Opera'')';
-      3: Result := Result + ' AND (S_title NOT LIKE ''%Internet Explorer'')';
-    end;
-  end;
 end;
 
 // Return year (0), month(1), day(2);
