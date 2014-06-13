@@ -164,7 +164,7 @@ begin
   conStatistic.Connected := False;
   conStatistic.ConnectionString := 'Provider=Microsoft.Jet.OLEDB.4.0;' +
     'Data Source="' + ExtractFilePath(ParamStr(0)) + 'data\Database.mdb";' +
-      'Persist Security Info=False';
+      'Persist Security Info=False; Jet OLEDB:Database Password="1"';
   conStatistic.Connected := True;
 
   qryStatistic.Active:=True;

@@ -50,7 +50,6 @@ object FStatistic: TFStatistic
       Width = 60
       Height = 13
       Caption = #1050#1086#1088#1080#1089#1090#1091#1074#1072#1095
-      Visible = False
     end
     object dtpMain: TDateTimePicker
       Left = 4
@@ -90,7 +89,6 @@ object FStatistic: TFStatistic
       Width = 145
       Height = 21
       TabOrder = 3
-      Visible = False
       OnChange = cbbUsersChange
     end
     object edtSearch: TEdit
@@ -171,7 +169,7 @@ object FStatistic: TFStatistic
       end
     end
     object tsGraphics: TTabSheet
-      Caption = #1043#1088#1072#1092#1110#1082#1080
+      Caption = #1044#1110#1072#1075#1088#1072#1084#1080
       ImageIndex = 1
       object chtMain: TChart
         Left = 0
