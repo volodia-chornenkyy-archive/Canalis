@@ -10,12 +10,9 @@ uses
 type
   TFSettings = class(TForm)
     pnlSettings: TPanel;
-    btnApply: TBitBtn;
     btnRestore: TBitBtn;
     btnPassChange: TBitBtn;
     btnIgnoreListShow: TBitBtn;
-    chbBrowserHistory: TCheckBox;
-    chklstBrowser: TCheckListBox;
     chkFiltered: TCheckBox;
     chkAutorun: TCheckBox;
     btnClose: TBitBtn;
@@ -23,7 +20,6 @@ type
     chkGraph3d: TCheckBox;
     procedure btnRestoreClick(Sender: TObject);
     procedure chbBrowserHistoryClick(Sender: TObject);
-    procedure btnApplyClick(Sender: TObject);
     procedure chkClick(Sender: TObject);
     procedure btnIgnoreListShowClick(Sender: TObject);
     procedure btnPassChangeClick(Sender: TObject);
@@ -147,6 +143,14 @@ end;
 
 procedure TFSettings.btnCloseClick(Sender: TObject);
 begin
+  SetIniSettings;
+  if Assigned(FStatistic) then
+    FStatistic.cbbVisionChoiceChange(nil);
+  MessageBox(handle, PChar('Налаштування успішно збережені'),
+    PChar(''), MB_ICONINFORMATION+MB_OK);
+  FStatistic.BetweenQuery();
+  if FStatistic.pgcMain.TabIndex = 1 then
+    FStatistic.cbbVisionChoiceChange(nil);
   Close;
 end;
 
@@ -164,25 +168,9 @@ begin
   FPassChange.ShowModal;
 end;
 
-procedure TFSettings.btnApplyClick(Sender: TObject);
-begin
-  SetIniSettings;
-  if Assigned(FStatistic) then
-    FStatistic.cbbVisionChoiceChange(nil);
-  MessageBox(handle, PChar('Налаштування успішно збережені'),
-    PChar(''), MB_ICONINFORMATION+MB_OK);
-  FStatistic.BetweenQuery();
-  if FStatistic.pgcMain.TabIndex = 1 then
-    FStatistic.cbbVisionChoiceChange(nil);
-  Close;
-end;
-
 procedure TFSettings.btnRestoreClick(Sender: TObject);
 begin
-  if PasswordCheck then
-    GetIniSettings
-  else
-    MessageBox(handle, PChar('Повторіть спробу входу'),PChar('Невірний пароль'), MB_ICONERROR+MB_OK);
+  GetIniSettings();
 end;
 
 end.

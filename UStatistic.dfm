@@ -106,7 +106,7 @@ object FStatistic: TFStatistic
     Top = 0
     Width = 772
     Height = 446
-    ActivePage = tsList
+    ActivePage = tsGraphics
     Align = alClient
     TabOrder = 1
     OnChange = pgcMainChange
