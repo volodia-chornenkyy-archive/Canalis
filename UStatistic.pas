@@ -181,12 +181,12 @@ end;
 procedure TFStatistic.ShowFiveLongestUsageApp;
 var
   vGridLength: integer;
-  i,j: integer;
+  i,j,k: integer;
   r: TGraphData;
   vLegendColor: TColor;
   vCategoryList: TStringList;
   sr: TSearchRec;
-  vCategoryFile: TextFile;
+  vFileContent: TStringList;
   vTitle: string;
 begin
   brsrsLongestUsageApp.Visible := True;
@@ -235,16 +235,14 @@ begin
       // Change title to user-category.
         for j := 0 to vCategoryList.Count - 1 do
         begin
-          AssignFile(vCategoryFile,
-            ExtractFilePath(ParamStr(0)) + 'data\category\' + vCategoryList[j]);
-          Reset(vCategoryFile);
-          while not(Eof(vCategoryFile)) do
-          begin
-            Readln(vCategoryFile, vTitle);
-            if vTitle = AData[i].FTitle then
+          vFileContent := TStringList.Create;
+          vFileContent.LoadFromFile(ExtractFilePath(ParamStr(0))
+            + 'data\category\' + vCategoryList[j]);
+          for k:=0 to vFileContent.Count-1 do
+            if Pos(AnsiUpperCase(vFileContent[k]),
+                    AnsiUpperCase(AData[i].FTitle)) <> 0 then
               AData[i].FTitle := FMain.ExtractFileNameEX(vCategoryList[j]);
-          end;
-          CloseFile(vCategoryFile);
+          vFileContent.Free;
         end;
 
       AData[i].FTime := TimeToSecond(FMain.qryStatistic.FieldByName('S_Time').AsDateTime);
@@ -779,7 +777,7 @@ end;
 
 procedure TFStatistic.pmiCategoryMasterClick(Sender: TObject);
 begin
-  FCategoryMaster.lbledtKeyWord.Text := FMain.qryStatistic.FieldByName('S_Title').AsString;
+  FCategoryMaster.mmoKeyWords.Lines.Add(FMain.qryStatistic.FieldByName('S_Title').AsString);
   FCategoryMaster.Show;
 end;
 

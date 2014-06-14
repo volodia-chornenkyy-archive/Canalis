@@ -10,10 +10,12 @@ uses
 type
   TFCategoryMaster = class(TForm)
     lbledtName: TLabeledEdit;
-    lbledtKeyWord: TLabeledEdit;
     btnCreate: TBitBtn;
+    mmoKeyWords: TMemo;
+    lblKeyWords: TLabel;
     procedure btnCreateClick(Sender: TObject);
     procedure CategoryCreate(operationWithFile: string; pathFile: string);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -38,22 +40,8 @@ var
   vFileContent: TStringList;
   vWriteCheck: Boolean;
 begin
-  FMain.qryStatistic.Active := False;
-
-  FMain.qryStatistic.SQL.Clear;
-  FMain.qryStatistic.SQL.Add('SELECT * FROM Statistic');
-  FMain.qryStatistic.SQL.Add('WHERE S_Title LIKE ''%' + lbledtKeyWord.Text + '%''');
-
-  FMain.qryStatistic.Prepared := True;
-  FMain.qryStatistic.Active := True;
-
-  FMain.qryStatistic.First;
   vCategoryList := TStringList.Create;
-  for i:=0  to  FStatistic.dbgrdStatistic.DataSource.DataSet.RecordCount-1 do
-  begin
-    vCategoryList.Add(FMain.qryStatistic.FieldByName('S_Title').AsString);
-    FMain.qryStatistic.Next;
-  end;
+  vCategoryList.Assign(mmoKeyWords.Lines);
   FStatistic.RemoveStringListDuplicates(vCategoryList);
 
   if operationWithFile = 'rewrite' then
@@ -70,22 +58,28 @@ begin
         if vCategoryList[i] = vFileContent[j] then
           vWriteCheck := False;
       end;
-      vFileContent.Add(vCategoryList[i]);
+      if vWriteCheck then
+        vFileContent.Add(vCategoryList[i]);
     end;
     vFileContent.SaveToFile(pathFile);
     vFileContent.Free;
   end;
 
   vCategoryList.Free;
-  FStatistic.BetweenQuery;
+  boolChanges := True;
   FCategoryMaster.Close;
+end;
+
+procedure TFCategoryMaster.FormShow(Sender: TObject);
+begin
+  mmoKeyWords.Clear;
 end;
 
 procedure TFCategoryMaster.btnCreateClick(Sender: TObject);
 var
   vFilePath: string;
 begin
-  if (Length(lbledtName.Text) <> 0) and (Length(lbledtKeyWord.Text) <> 0) then
+  if (Length(lbledtName.Text) <> 0) and (Length(mmoKeyWords.Lines[0]) <> 0) then
   begin 
     vFilePath := ExtractFilePath(ParamStr(0)) + 'data\category\' +
       lbledtName.Text + '.txt';

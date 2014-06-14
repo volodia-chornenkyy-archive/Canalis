@@ -25,8 +25,6 @@ object FSettings: TFSettings
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitTop = 193
-    ExplicitWidth = 193
     object btnRestore: TBitBtn
       Left = 5
       Top = 27
@@ -56,7 +54,7 @@ object FSettings: TFSettings
     end
     object btnClose: TBitBtn
       Left = 5
-      Top = 58
+      Top = 51
       Width = 156
       Height = 25
       Caption = #1047#1072#1082#1088#1080#1090#1080
@@ -91,7 +89,7 @@ object FSettings: TFSettings
     Top = 8
     Width = 153
     Height = 105
-    Caption = #1057#1090#1072#1090#1080#1089#1090#1080#1082#1091' '#1079#1072':'
+    Caption = #1057#1090#1072#1090#1080#1089#1090#1080#1082#1072' '#1079#1072':'
     ItemIndex = 1
     Items.Strings = (
       #1044#1077#1085#1100
