@@ -22,6 +22,5 @@ begin
   Application.CreateForm(TFSettings, FSettings);
   Application.CreateForm(TFPassCheck, FPassCheck);
   Application.CreateForm(TFStatistic, FStatistic);
-  Application.CreateForm(TFCategoryList, FCategoryList);
   Application.Run;
 end.

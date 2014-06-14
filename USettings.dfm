@@ -25,22 +25,13 @@ object FSettings: TFSettings
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 0
-    object btnRestore: TBitBtn
+    object btnPassChange: TBitBtn
       Left = 5
       Top = 27
-      Width = 68
-      Height = 25
-      Caption = #1042#1110#1076#1085#1086#1074#1080#1090#1080
-      TabOrder = 0
-      OnClick = btnRestoreClick
-    end
-    object btnPassChange: TBitBtn
-      Left = 71
-      Top = 27
-      Width = 90
+      Width = 156
       Height = 25
       Caption = #1047#1084#1110#1085#1080#1090#1080' '#1087#1072#1088#1086#1083#1100
-      TabOrder = 1
+      TabOrder = 0
       OnClick = btnPassChangeClick
     end
     object btnIgnoreListShow: TBitBtn
@@ -49,7 +40,7 @@ object FSettings: TFSettings
       Width = 156
       Height = 25
       Caption = #1057#1087#1080#1089#1086#1082' '#1082#1072#1090#1077#1075#1086#1088#1110#1081
-      TabOrder = 2
+      TabOrder = 1
       OnClick = btnIgnoreListShowClick
     end
     object btnClose: TBitBtn
@@ -58,7 +49,7 @@ object FSettings: TFSettings
       Width = 156
       Height = 25
       Caption = #1047#1072#1082#1088#1080#1090#1080
-      TabOrder = 3
+      TabOrder = 2
       OnClick = btnCloseClick
     end
   end

@@ -10,7 +10,6 @@ uses
 type
   TFSettings = class(TForm)
     pnlSettings: TPanel;
-    btnRestore: TBitBtn;
     btnPassChange: TBitBtn;
     btnIgnoreListShow: TBitBtn;
     chkFiltered: TCheckBox;
@@ -18,7 +17,6 @@ type
     btnClose: TBitBtn;
     rgStatisticTime: TRadioGroup;
     chkGraph3d: TCheckBox;
-    procedure btnRestoreClick(Sender: TObject);
     procedure chkClick(Sender: TObject);
     procedure btnIgnoreListShowClick(Sender: TObject);
     procedure btnPassChangeClick(Sender: TObject);
@@ -98,9 +96,9 @@ end;
 procedure TFSettings.FormShow(Sender: TObject);
 begin
   if FileExists(ExtractFilePath(ParamStr(0))+'Settings.ini') then
-    GetIniSettings
+    GetIniSettings()
   else
-    SetIniSettings;
+    SetIniSettings();
 end;
 
 procedure TFSettings.btnCloseClick(Sender: TObject);
@@ -136,11 +134,6 @@ begin
   if not (Assigned(FPassChange)) then
     FPassChange := TFPassChange.Create(Self);
   FPassChange.ShowModal;
-end;
-
-procedure TFSettings.btnRestoreClick(Sender: TObject);
-begin
-  GetIniSettings();
 end;
 
 end.
