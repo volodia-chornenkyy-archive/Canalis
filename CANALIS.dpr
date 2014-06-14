@@ -9,8 +9,6 @@ uses
   UPassChange in 'UPassChange.pas' {FPassChange},
   UIgnoreList in 'UIgnoreList.pas' {FCategoryList},
   UPassCheck in 'UPassCheck.pas' {FPassCheck},
-  UAddToCategory in 'UAddToCategory.pas' {FAddToCategory},
-  UCategoryMaster in 'UCategoryMaster.pas' {FCategoryMaster},
   Vcl.Themes,
   Vcl.Styles;
 
@@ -23,8 +21,7 @@ begin
   Application.CreateForm(TFMain, FMain);
   Application.CreateForm(TFSettings, FSettings);
   Application.CreateForm(TFPassCheck, FPassCheck);
-  Application.CreateForm(TFAddToCategory, FAddToCategory);
-  Application.CreateForm(TFCategoryMaster, FCategoryMaster);
   Application.CreateForm(TFStatistic, FStatistic);
+  Application.CreateForm(TFCategoryList, FCategoryList);
   Application.Run;
 end.

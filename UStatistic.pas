@@ -42,8 +42,6 @@ type
     cbbUsers: TComboBox;
     lblUsers: TLabel;
     pmiAddToCategory: TMenuItem;
-    pmiCategoryMaster: TMenuItem;
-    pmiCategoryManual: TMenuItem;
     edtSearch: TEdit;
     procedure dtpMainChange(Sender: TObject);
     procedure pgcMainChange(Sender: TObject);
@@ -60,11 +58,11 @@ type
     procedure btnSettingsClick(Sender: TObject);
     procedure cbbUsersChange(Sender: TObject);
     procedure pmiCategoryManualClick(Sender: TObject);
-    procedure pmiCategoryMasterClick(Sender: TObject);
     function CustomDateDecode(date: TDate; resultType:Byte):Word;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure edtSearchChange(Sender: TObject);
     procedure RemoveStringListDuplicates(const stringList : TStringList);
+    procedure pmiAddToCategoryClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -84,7 +82,7 @@ var
 
 implementation
 
-uses UMain, USettings, UAddToCategory, UCategoryMaster;
+uses UMain, USettings, UAddToCategory, UCategoryMaster, UIgnoreList;
 
 {$R *.dfm}
 
@@ -463,7 +461,7 @@ begin
     (Sender as TLabel).ShowHint := True;
 end;
 
-// Load and create SQL-query ignore titles.
+// Append SQL-query with ignore titles.
 function IgnoreListToSql():string;
 var
   i: integer;
@@ -471,10 +469,11 @@ var
   vStringList: TStringList;
   vSqlQuery: string;
 begin
-  if FileExists(ExtractFilePath(ParamStr(0)) + 'data\Ignore.lst') then
+  if FileExists(ExtractFilePath(ParamStr(0)) + 'data\category\Ignore.txt') then
   begin
     vStringList := TStringList.Create;
-    vStringList.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'data\Ignore.lst');
+    vStringList.LoadFromFile(
+      ExtractFilePath(ParamStr(0)) + 'data\category\Ignore.txt');
     vListLength := vStringList.Count-1;
     for i:=0 to vListLength do
     begin
@@ -750,20 +749,25 @@ begin
   BetweenQuery();
 end;
 
+procedure TFStatistic.pmiAddToCategoryClick(Sender: TObject);
+begin
+  if not (Assigned(FCategoryList)) then
+    FCategoryList := TFCategoryList.Create(Self);
+  FCategoryList.mmoContent.Lines.Add(FMain.qryStatistic.FieldByName('S_Title').AsString);
+  FCategoryList.Show;
+end;
+
 procedure TFStatistic.pmiAddToSkipListClick(Sender: TObject);
 var
   vFileIgnoreList: TextFile;
 begin
-  AssignFile(vFileIgnoreList, ExtractFilePath(ParamStr(0)) + 'data\Ignore.lst');
-  if FileExists(ExtractFilePath(ParamStr(0)) + 'data\Ignore.lst') then
+  AssignFile(vFileIgnoreList,
+    ExtractFilePath(ParamStr(0)) + 'data\category\Ignore.txt');
+  if FileExists(ExtractFilePath(ParamStr(0)) + 'data\category\Ignore.txt') then
     Append(vFileIgnoreList)
   else
-  begin
     Rewrite(vFileIgnoreList);
-    Writeln(vFileIgnoreList, '');
-    Writeln(vFileIgnoreList, 'Program Manager');
-  end;
-  writeln(vFileIgnoreList,
+  Writeln(vFileIgnoreList,
     dbgrdStatistic.DataSource.DataSet.FieldByName('S_Title').AsString);
   CloseFile(vFileIgnoreList);
   if FSettings.chkFiltered.Checked then
@@ -773,12 +777,6 @@ end;
 procedure TFStatistic.pmiCategoryManualClick(Sender: TObject);
 begin
   FAddToCategory.ShowModal;
-end;
-
-procedure TFStatistic.pmiCategoryMasterClick(Sender: TObject);
-begin
-  FCategoryMaster.mmoKeyWords.Lines.Add(FMain.qryStatistic.FieldByName('S_Title').AsString);
-  FCategoryMaster.Show;
 end;
 
 procedure TFStatistic.pgcMainChange(Sender: TObject);

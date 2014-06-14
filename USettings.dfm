@@ -3,7 +3,7 @@ object FSettings: TFSettings
   Top = 0
   BorderIcons = [biMinimize, biMaximize]
   BorderStyle = bsToolWindow
-  Caption = 'Canalis - Settings'
+  Caption = #1053#1072#1083#1072#1096#1090#1091#1074#1072#1085#1085#1103
   ClientHeight = 263
   ClientWidth = 166
   Color = clBtnHighlight

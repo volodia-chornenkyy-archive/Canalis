@@ -109,14 +109,6 @@
             <Form>FPassCheck</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="UAddToCategory.pas">
-            <Form>FAddToCategory</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="UCategoryMaster.pas">
-            <Form>FCategoryMaster</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

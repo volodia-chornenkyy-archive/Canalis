@@ -3,21 +3,26 @@ unit UIgnoreList;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls;
 
 type
   TFCategoryList = class(TForm)
-    lstIgnoreList: TListBox;
     pnl: TPanel;
     btnSave: TBitBtn;
     btnDelete: TBitBtn;
+    lbl1: TLabel;
+    lbl3: TLabel;
+    mmoContent: TMemo;
     btnClose: TBitBtn;
     cbbCategory: TComboBox;
     procedure FormShow(Sender: TObject);
     procedure btnSaveClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
+    procedure mmoContentKeyPress(Sender: TObject; var Key: Char);
+    procedure FindFiles(pathFile: string; typeFile: string);
     procedure cbbCategoryChange(Sender: TObject);
   private
     { Private declarations }
@@ -27,7 +32,7 @@ type
 
 var
   FCategoryList: TFCategoryList;
-  blSaveCheck: Boolean;
+
 implementation
 
 uses UMain;
@@ -36,65 +41,79 @@ uses UMain;
 
 procedure TFCategoryList.btnCloseClick(Sender: TObject);
 begin
-  if blSaveCheck = False then
-  if  MessageBox(handle, PChar('Список не збережений. Зберегти?'),
-    PChar(''), MB_YESNO+MB_ICONQUESTION) = mrYes then
-  begin
+  if btnSave.Tag = 1 then
     btnSave.Click;
-  end;
-  FCategoryList.Close;
+  mmoContent.Lines.Clear;
+  cbbCategory.Items.Clear;
+  Close;
 end;
 
 procedure TFCategoryList.btnDeleteClick(Sender: TObject);
 begin
-  lstIgnoreList.DeleteSelected;
-  lstIgnoreList.ItemIndex := 0;
-  blSaveCheck := False;
-end;
-
-procedure TFCategoryList.btnSaveClick(Sender: TObject);
-begin
-  if blSaveCheck = False then
+  if MessageBox(handle, PChar('Ви впевнені що хочете видалити категорію ' +
+    cbbCategory.Items[cbbCategory.ItemIndex]), PChar(''),
+    MB_YESNO + MB_ICONWARNING) = IDYES then
   begin
-    lstIgnoreList.Items.SaveToFile(
-      ExtractFilePath(ParamStr(0)) + 'data\Ignore.lst');
-    blSaveCheck := True;
-    MessageBox(handle, PChar('Список збережений.'),
-      PChar(''), MB_OK+MB_ICONWARNING);
+    DeleteFile('data\category\' + cbbCategory.Items[cbbCategory.ItemIndex]
+      + '.txt');
+    cbbCategory.Items.Clear;
+    FindFiles('data\category\', '*.txt');
   end;
 end;
 
-procedure TFCategoryList.cbbCategoryChange(Sender: TObject);
-begin
-  btnSave.Click;
-
-  if cbbCategory.ItemIndex = 0 then
-    lstIgnoreList.Items.LoadFromFile(
-      ExtractFilePath(ParamStr(0)) + 'data\Ignore.lst')
-  else
-    lstIgnoreList.Items.LoadFromFile(
-      ExtractFilePath(ParamStr(0)) + 'data\category\' +
-      cbbCategory.Items[cbbCategory.ItemIndex] + '.txt');
-end;
-
-procedure TFCategoryList.FormShow;
+procedure TFCategoryList.FindFiles(pathFile: string; typeFile: string);
 var
   sr: TSearchRec;
 begin
-  lstIgnoreList.Items.LoadFromFile(
-    ExtractFilePath(ParamStr(0)) + 'data\Ignore.lst');
-  cbbCategory.Items.Add('Ігноровані заголовки');
-  cbbCategory.ItemIndex := 0;
-
-  if FindFirst('data\category\*.txt', faAnyFile, sr) = 0 then
+  if FindFirst(ExtractFilePath(ParamStr(0)) + pathFile + typeFile, faAnyFile,
+    sr) = 0 then
   begin
     repeat
       cbbCategory.Items.Add(FMain.ExtractFileNameEX(sr.Name));
     until FindNext(sr) <> 0;
     FindClose(sr);
   end;
+end;
 
-  blSaveCheck := True;
+procedure TFCategoryList.btnSaveClick(Sender: TObject);
+var
+  msgRsult: Byte;
+begin
+  msgRsult := MessageBox(handle,
+    PChar('Зберегти категорію ' + cbbCategory.Items[cbbCategory.ItemIndex] +
+    '? (Yes)' + #13 + 'Створити нове ім''я? (No)' + #13 +
+    'Відмінити налаштування? (Cancel)'), PChar(''),
+    MB_YESNOCANCEL + MB_ICONWARNING);
+  if msgRsult = IDYES then
+    mmoContent.Lines.SaveToFile(ExtractFilePath(ParamStr(0)) + 'data\category\'
+      + cbbCategory.Items[cbbCategory.ItemIndex] + '.txt')
+  else if msgRsult = IDNO then
+    mmoContent.Lines.SaveToFile(ExtractFilePath(ParamStr(0)) + 'data\category\'
+      + InputBox('', 'Введіть ім''я категорії', mmoContent.Lines[0]) + '.txt');
+  if msgRsult <> IDCANCEL then
+  begin
+    cbbCategory.Items.Clear;
+    FindFiles('data\category\', '*.txt');
+  end;
+  cbbCategory.Enabled := True;
+end;
+
+procedure TFCategoryList.cbbCategoryChange(Sender: TObject);
+begin
+  mmoContent.Lines.LoadFromFile('data\category\' + cbbCategory.Items
+    [cbbCategory.ItemIndex] + '.txt');
+end;
+
+procedure TFCategoryList.FormShow;
+begin
+  FindFiles('data\category\', '*.txt');
+  cbbCategory.ItemIndex := -1;
+  mmoContent.Lines.Add('Виберіть категорію з випадаючого списку');
+end;
+
+procedure TFCategoryList.mmoContentKeyPress(Sender: TObject; var Key: Char);
+begin
+  cbbCategory.Enabled := False;
 end;
 
 end.

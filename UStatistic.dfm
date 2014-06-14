@@ -2,7 +2,7 @@ object FStatistic: TFStatistic
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
-  Caption = 'CANALIS - Statistic'
+  Caption = #1040#1082#1090#1080#1074#1085#1110#1089#1090#1100' '#1082#1086#1088#1080#1089#1090#1091#1074#1072#1095#1072
   ClientHeight = 492
   ClientWidth = 772
   Color = clBtnFace
@@ -50,6 +50,7 @@ object FStatistic: TFStatistic
       Width = 60
       Height = 13
       Caption = #1050#1086#1088#1080#1089#1090#1091#1074#1072#1095
+      Visible = False
     end
     object dtpMain: TDateTimePicker
       Left = 4
@@ -89,6 +90,7 @@ object FStatistic: TFStatistic
       Width = 145
       Height = 21
       TabOrder = 3
+      Visible = False
       OnChange = cbbUsersChange
     end
     object edtSearch: TEdit
@@ -106,7 +108,7 @@ object FStatistic: TFStatistic
     Top = 0
     Width = 772
     Height = 446
-    ActivePage = tsGraphics
+    ActivePage = tsList
     Align = alClient
     TabOrder = 1
     OnChange = pgcMainChange
@@ -443,14 +445,7 @@ object FStatistic: TFStatistic
     end
     object pmiAddToCategory: TMenuItem
       Caption = #1044#1086#1076#1072#1090#1080' '#1074' '#1082#1072#1090#1077#1075#1086#1088#1110#1102
-      object pmiCategoryMaster: TMenuItem
-        Caption = #1052#1072#1081#1089#1090#1077#1088
-        OnClick = pmiCategoryMasterClick
-      end
-      object pmiCategoryManual: TMenuItem
-        Caption = #1042#1088#1091#1095#1085#1091
-        OnClick = pmiCategoryManualClick
-      end
+      OnClick = pmiAddToCategoryClick
     end
   end
 end

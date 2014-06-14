@@ -39,7 +39,7 @@ object FPassChange: TFPassChange
     TextHint = #1055#1086#1074#1090#1086#1088#1110#1090#1100' '#1085#1086#1074#1080#1081' '#1087#1072#1088#1086#1083#1100
   end
   object btnAccept: TBitBtn
-    Left = 39
+    Left = 70
     Top = 99
     Width = 75
     Height = 25
