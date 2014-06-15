@@ -35,7 +35,7 @@ var
 
 implementation
 
-uses UMain;
+uses UMain, UStatistic;
 
 {$R *.dfm}
 
@@ -95,6 +95,7 @@ begin
   begin
     cbbCategory.Items.Clear;
     FindFiles('data\category\', '*.txt');
+    FStatistic.StatisticStartup();
   end;
   cbbCategory.Enabled := True;
   mmoContent.Tag := 0;
