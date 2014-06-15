@@ -41,10 +41,11 @@ uses UMain;
 
 procedure TFCategoryList.btnCloseClick(Sender: TObject);
 begin
-  if btnSave.Tag = 1 then
+  if cbbCategory.Enabled = False then
     btnSave.Click;
   mmoContent.Lines.Clear;
   cbbCategory.Items.Clear;
+  mmoContent.Tag := 0;
   Close;
 end;
 
@@ -96,12 +97,24 @@ begin
     FindFiles('data\category\', '*.txt');
   end;
   cbbCategory.Enabled := True;
+  mmoContent.Tag := 0;
 end;
 
 procedure TFCategoryList.cbbCategoryChange(Sender: TObject);
+var
+  temp: TStringList;
 begin
-  mmoContent.Lines.LoadFromFile('data\category\' + cbbCategory.Items
-    [cbbCategory.ItemIndex] + '.txt');
+  if mmoContent.Tag = 0 then
+    mmoContent.Lines.LoadFromFile('data\category\' + cbbCategory.Items
+      [cbbCategory.ItemIndex] + '.txt')
+  else
+  begin
+    temp := TStringList.Create;
+    temp.LoadFromFile('data\category\' + cbbCategory.Items
+      [cbbCategory.ItemIndex] + '.txt');
+    mmoContent.Lines.AddStrings(temp);
+    temp.Free;
+  end;
 end;
 
 procedure TFCategoryList.FormShow;
@@ -113,7 +126,8 @@ end;
 
 procedure TFCategoryList.mmoContentKeyPress(Sender: TObject; var Key: Char);
 begin
-  cbbCategory.Enabled := False;
+  if mmoContent.Tag = 0 then
+    cbbCategory.Enabled := False;
 end;
 
 end.

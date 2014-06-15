@@ -241,42 +241,14 @@ object FStatistic: TFStatistic
         BevelWidth = 2
         Color = clWhite
         TabOrder = 0
+        ExplicitLeft = 3
+        ExplicitTop = 16
         DefaultCanvas = 'TGDIPlusCanvas'
         ColorPaletteIndex = 19
-        object brsrsFavouriteWebPages: TBarSeries
-          LegendTitle = '1'
-          BarBrush.Gradient.Balance = 100
-          BarBrush.Gradient.EndColor = 13408512
-          BarBrush.Gradient.Visible = True
-          BarPen.Color = clDefault
-          BarPen.SmallSpace = 1
-          ColorEachPoint = True
-          Marks.Visible = True
-          Marks.Arrow.SmallSpace = 1
-          Marks.Arrow.Visible = False
-          Marks.Callout.Arrow.SmallSpace = 1
-          Marks.Callout.Arrow.Visible = False
-          Marks.Callout.ArrowHead = ahLine
-          ShowInLegend = False
-          Title = 'brsrFavouriteWebPages'
-          Gradient.Balance = 100
-          Gradient.EndColor = 13408512
-          Gradient.Visible = True
-          MultiBar = mbNone
-          Shadow.Transparency = 38
-          TickLines.Color = -889192448
-          XValues.Name = 'X'
-          XValues.Order = loAscending
-          YValues.Name = 'Bar'
-          YValues.Order = loNone
-          Data = {
-            0206000000000000000028744000FF00000000000000187A4000000020000000
-            0000807640000000200000000000007E40000000200000000000A88140000000
-            200000000000D07B4000000020}
-        end
-        object psrsUserTime: TPieSeries
+        object psrsUser: TPieSeries
           Marks.Visible = True
           Marks.Style = smsLabelPercent
+          Title = 'psrsUser'
           XValues.Order = loAscending
           YValues.Name = 'Pie'
           YValues.Order = loNone
@@ -307,9 +279,8 @@ object FStatistic: TFStatistic
           PieMarks.EmptySlice = True
           PiePen.SmallSpace = 1
         end
-        object brsrsLongestUsageApp: TBarSeries
+        object brsrsProgram: TBarSeries
           LegendTitle = '1'
-          Active = False
           BarBrush.Gradient.Balance = 100
           BarBrush.Gradient.EndColor = 13408512
           BarBrush.Gradient.Visible = True
@@ -324,7 +295,7 @@ object FStatistic: TFStatistic
           Marks.Callout.ArrowHead = ahLine
           SeriesColor = 15054131
           ShowInLegend = False
-          Title = 'brsrLongestUsageApp'
+          Title = 'brsrProgram'
           Gradient.Balance = 100
           Gradient.EndColor = 13408512
           Gradient.Visible = True
