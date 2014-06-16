@@ -173,6 +173,10 @@ object FStatistic: TFStatistic
     object tsGraphics: TTabSheet
       Caption = #1044#1110#1072#1075#1088#1072#1084#1080
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object chtMain: TChart
         Left = 0
         Top = 0

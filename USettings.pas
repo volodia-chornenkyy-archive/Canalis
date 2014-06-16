@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.IniFiles,
-  Vcl.Buttons, Vcl.CheckLst, Vcl.ExtCtrls, System.Win.Registry;
+  Vcl.Buttons, Vcl.ExtCtrls, System.Win.Registry;
 
 type
   TFSettings = class(TForm)
@@ -37,7 +37,7 @@ var
   boolSettingsChange: Boolean = False;
 implementation
 
-uses UPassChange, UMain, USecurity, UStatistic, UIgnoreList;
+uses UPassChange, UStatistic, UIgnoreList;
 
 {$R *.dfm}
 

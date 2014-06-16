@@ -6,10 +6,10 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.Menus, Vcl.ComCtrls,
-  Vcl.ExtCtrls, System.DateUtils, Vcl.StdCtrls, System.IniFiles,
-  VclTee.TeeGDIPlus, VclTee.TeEngine, VclTee.TeeProcs,
+  Vcl.ExtCtrls, System.DateUtils, Vcl.StdCtrls,
+  VclTee.TeEngine, VclTee.TeeProcs,
   VclTee.Chart, VclTee.Series, Vcl.Buttons, Vcl.DBGrids, Vcl.AppEvnts,
-  VclTee.DBChart, VclTee.TeeDBCrossTab, VclTee.BubbleCh, VclTee.TeeFunci;
+  VclTee.TeeGDIPlus;
 
 type
   TFStatistic = class(TForm)
@@ -48,11 +48,9 @@ type
     procedure FormShow(Sender: TObject);
     procedure pmiAddToSkipListClick(Sender: TObject);
     procedure BetweenQuery;
-    procedure ShowFiveLongestUsageApp;
     procedure lblLegendMouseMove(Sender: TObject; Shift: TShiftState;
       X, Y: Integer);
     procedure cbbVisionChoiceChange(Sender: TObject);
-    procedure ShowFiveFavouriteWebPages(browserName: string);
     procedure ShowUserTimeUsed;
     procedure StatisticStartup;
     procedure btnSettingsClick(Sender: TObject);
@@ -85,7 +83,7 @@ var
 
 implementation
 
-uses UMain, USettings, UAddToCategory, UCategoryMaster, UIgnoreList;
+uses UMain, USettings, UAddToCategory, UIgnoreList;
 
 {$R *.dfm}
 
@@ -180,15 +178,15 @@ begin
 end;
 
 // Chart of 5 longest usage title/categorys.
-procedure TFStatistic.ShowFiveLongestUsageApp;
+procedure TFStatistic.ShowFiveCategoryTop(nameCategory: string);
 var
-  vGridLength: Integer;
+  vGridLength, vArrayLength: Integer;
   i, j, k: Integer;
   r: TGraphData;
   vLegendColor: TColor;
-  vCategoryList: TStringList;
   sr: TSearchRec;
   vFileContent: TStringList;
+  vCategoryList: TStringList;
   vTitle: string;
 begin
   brsrsProgram.Visible := True;
@@ -203,36 +201,53 @@ begin
   else
     chtMain.View3D := False;
 
-  SetLength(AData, 0);
+  vArrayLength := 0;
+  SetLength(AData, vArrayLength);
   FMain.qryStatistic.First;
 
   vGridLength := dbgrdStatistic.DataSource.DataSet.RecordCount - 1;
   if vGridLength > 0 then
   begin
-    // Find all *.txt-files in data\category\.
-    vCategoryList := TStringList.Create;
-    if FindFirst('data\category\*.txt', faAnyFile, sr) = 0 then
+    if nameCategory <> 'general' then
     begin
-      repeat
-        vCategoryList.Add(sr.Name);
-      until FindNext(sr) <> 0;
-      FindClose(sr);
-    end;
-
-    SetLength(AData, vGridLength + 1);
-    // Change title to program-category.
-    for i := 0 to vGridLength do
+      // Load category key phrase to string list.
+      vFileContent := TStringList.Create;
+      vFileContent.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'data\category\' +
+        nameCategory + '.txt');
+      // Change title to program-category.
+      for i := 0 to vGridLength do
+      begin
+        SetLength(AData, vArrayLength + 1);
+        vTitle := FMain.qryStatistic.FieldByName('S_Title').AsString;
+        for j := 0 to vFileContent.Count - 1 do
+          if Pos(AnsiUpperCase(vFileContent[j]), AnsiUpperCase(vTitle)) <> 0 then
+          begin
+            AData[vArrayLength].FTitle := vTitle;
+            AData[i].FTime :=
+              TimeToSecond(FMain.qryStatistic.FieldByName('S_Time').AsDateTime);
+          end;
+        Inc(vArrayLength);
+        FMain.qryStatistic.Next;
+      end;
+      vFileContent.Free;
+    end
+    else // If nameCategory = general.
     begin
-      AData[i].FTitle := FMain.qryStatistic.FieldByName('S_Title').AsString;
-      if Pos('Google Chrome', AData[i].FTitle) <> 0 then
-        AData[i].FTitle := 'Google Chrome'
-      else if Pos('Mozilla Firefox', AData[i].FTitle) <> 0 then
-        AData[i].FTitle := 'Mozilla Firefox'
-      else if Pos('Opera', AData[i].FTitle) <> 0 then
-        AData[i].FTitle := 'Opera'
-      else if Pos('Internet Explorer', AData[i].FTitle) <> 0 then
-        AData[i].FTitle := 'Internet Explorer'
-      else
+      // Find all *.txt-files in data\category\.
+      vCategoryList := TStringList.Create;
+      if FindFirst('data\category\*.txt', faAnyFile, sr) = 0 then
+      begin
+        repeat
+          vCategoryList.Add(sr.Name);
+        until FindNext(sr) <> 0;
+        FindClose(sr);
+      end;
+      vArrayLength := vGridLength;
+      SetLength(AData, vArrayLength);
+      // Change title to program-category.
+      for i := 0 to vArrayLength do
+      begin
+        AData[i].FTitle := FMain.qryStatistic.FieldByName('S_Title').AsString;
         // Change title to user-category.
         for j := 0 to vCategoryList.Count - 1 do
         begin
@@ -245,16 +260,17 @@ begin
               AData[i].FTitle := FMain.ExtractFileNameEX(vCategoryList[j]);
           vFileContent.Free;
         end;
-      AData[i].FTime := TimeToSecond(FMain.qryStatistic.FieldByName('S_Time')
-        .AsDateTime);
-      FMain.qryStatistic.Next;
+        AData[i].FTime := TimeToSecond(FMain.qryStatistic.FieldByName('S_Time')
+          .AsDateTime);
+        FMain.qryStatistic.Next;
+      end;
+      vCategoryList.Free;
     end;
 
-    vCategoryList.Free;
-
     // Sum same titles.
-    for i := 0 to vGridLength - 1 do
-      for j := i + 1 to vGridLength do
+	  vArrayLength := Length(AData)-1;
+    for i := 0 to vArrayLength-1 do
+      for j := i + 1 to vArrayLength do
       begin
         if (AData[i].FTitle = AData[j].FTitle) and (AData[j].FTime <> 0) then
         begin
@@ -263,213 +279,17 @@ begin
         end;
       end;
 
-    BoobleSort(0, vGridLength);
+    BoobleSort(0, vArrayLength);
 
     // Create graph and legend.
-    if vGridLength > 5 then
-    begin
-      SetLength(AData, 5);
-
-      brsrsProgram.Clear;
-      j := Length(AData) - 1;
-      for i := 0 to j do
-      begin
-        vLegendColor := GetRandomColor();
-        brsrsProgram.AddBar(AData[i].FTime,
-          (SecondToStr(AData[i].FTime) + #13 + '(' + IntToStr(AData[i].FTime) +
-          'cек)'), vLegendColor);
-        case i of
-          0:
-            FillLegend(imgLegend1, vLegendColor, lblLegend1, AData[i].FTitle);
-          1:
-            FillLegend(imgLegend2, vLegendColor, lblLegend2, AData[i].FTitle);
-          2:
-            FillLegend(imgLegend3, vLegendColor, lblLegend3, AData[i].FTitle);
-          3:
-            FillLegend(imgLegend4, vLegendColor, lblLegend4, AData[i].FTitle);
-          4:
-            FillLegend(imgLegend5, vLegendColor, lblLegend5, AData[i].FTitle);
-        end;
-      end;
-    end
-    else
-      MessageBox(handle, PChar('Не достатньо даних.'), PChar(''),
-        MB_ICONWARNING + MB_OK);
-  end
-  else
-    MessageBox(handle, PChar('Не достатньо даних.'), PChar(''),
-      MB_ICONWARNING + MB_OK);
-end;
-
-// Chart of 5 longest usage title/categorys.
-procedure TFStatistic.ShowFiveCategoryTop(nameCategory: string);
-var
-  vGridLength, vArrayLength: Integer;
-  i, j, k: Integer;
-  r: TGraphData;
-  vLegendColor: TColor;
-  sr: TSearchRec;
-  vFileContent: TStringList;
-  vTitle: string;
-begin
-  brsrsProgram.Visible := True;
-  psrsUser.Visible := False;
-  chtMain.title.Text.Clear;
-  chtMain.title.Text.Append('Найдовше використання програм');
-  if FSettings.chkGraph3d.Checked then
-  begin
-    chtMain.View3D := True;
-    chtMain.View3DOptions.Orthogonal := True;
-  end
-  else
-    chtMain.View3D := False;
-
-  vArrayLength := 0;
-  SetLength(AData, vArrayLength);
-  FMain.qryStatistic.First;
-
-  vGridLength := dbgrdStatistic.DataSource.DataSet.RecordCount - 1;
-  if vGridLength > 0 then
-  begin
-    // Load category key phrase to string list.
-    vFileContent := TStringList.Create;
-    vFileContent.LoadFromFile(ExtractFilePath(ParamStr(0)) + 'data\category\' +
-      nameCategory + '.txt');
-    // Change title to program-category.
-    for i := 0 to vGridLength do
-    begin
-      SetLength(AData, vArrayLength + 1);
-      vTitle := FMain.qryStatistic.FieldByName('S_Title').AsString;
-      for j := 0 to vFileContent.Count - 1 do
-        if Pos(AnsiUpperCase(vFileContent[j]), AnsiUpperCase(vTitle)) <> 0 then
-        begin
-          AData[vArrayLength].FTitle := vTitle;
-          AData[i].FTime :=
-            TimeToSecond(FMain.qryStatistic.FieldByName('S_Time').AsDateTime);
-        end;
-      Inc(vArrayLength);
-      FMain.qryStatistic.Next;
-    end;
-
-    // Sum same titles.
-    for i := 0 to vArrayLength - 2 do
-      for j := i + 1 to vArrayLength - 1 do
-      begin
-        if (AData[i].FTitle = AData[j].FTitle) and (AData[j].FTime <> 0) then
-        begin
-          AData[i].FTime := AData[i].FTime + AData[j].FTime;
-          AData[j].FTime := 0;
-        end;
-      end;
-
-    BoobleSort(0, vGridLength);
-
-    // Create graph and legend.
-    if vGridLength > 5 then
-    begin
-      SetLength(AData, 5);
-
-      brsrsProgram.Clear;
-      j := Length(AData) - 1;
-      for i := 0 to j do
-      begin
-        vLegendColor := GetRandomColor();
-        brsrsProgram.AddBar(AData[i].FTime,
-          (SecondToStr(AData[i].FTime) + #13 + '(' + IntToStr(AData[i].FTime) +
-          'cек)'), vLegendColor);
-        case i of
-          0:
-            FillLegend(imgLegend1, vLegendColor, lblLegend1, AData[i].FTitle);
-          1:
-            FillLegend(imgLegend2, vLegendColor, lblLegend2, AData[i].FTitle);
-          2:
-            FillLegend(imgLegend3, vLegendColor, lblLegend3, AData[i].FTitle);
-          3:
-            FillLegend(imgLegend4, vLegendColor, lblLegend4, AData[i].FTitle);
-          4:
-            FillLegend(imgLegend5, vLegendColor, lblLegend5, AData[i].FTitle);
-        end;
-      end;
-    end
-    else
-      MessageBox(handle, PChar('Не достатньо даних.'), PChar(''),
-        MB_ICONWARNING + MB_OK);
-    vFileContent.Free;
-  end
-  else
-    MessageBox(handle, PChar('Не достатньо даних.'), PChar(''),
-      MB_ICONWARNING + MB_OK);
-end;
-
-// Chart of 5 longest usage web-title.
-procedure TFStatistic.ShowFiveFavouriteWebPages(browserName: string);
-var
-  vGridLength: Integer;
-  i, j: Integer;
-  r: TGraphData;
-  vLegendColor: TColor;
-  vArrayLength: Integer;
-begin
-  brsrsProgram.Visible := True;
-  psrsUser.Visible := False;
-  chtMain.title.Text.Clear;
-  chtMain.title.Text.Append('Найбільш популярні вкладки ' +
-    cbbVisionChoice.Items[cbbVisionChoice.ItemIndex]);
-  if FSettings.chkGraph3d.Checked then
-  begin
-    chtMain.View3D := True;
-    chtMain.View3DOptions.Orthogonal := True;
-  end
-  else
-    chtMain.View3D := False;
-
-  // Array with browser titles.
-  vArrayLength := 0;
-  SetLength(AData, vArrayLength);
-  FMain.qryStatistic.First;
-  vGridLength := dbgrdStatistic.DataSource.DataSet.RecordCount - 1;
-  for i := 0 to vGridLength do
-  begin
-    if Pos(browserName, FMain.qryStatistic.FieldByName('S_Title').AsString) <> 0
-    then
-    begin
-      Inc(vArrayLength);
-      SetLength(AData, vArrayLength);
-      AData[vArrayLength - 1].FTitle := FMain.qryStatistic.FieldByName
-        ('S_Title').AsString;
-      AData[vArrayLength - 1].FTime :=
-        TimeToSecond(FMain.qryStatistic.FieldByName('S_Time').AsDateTime);
-    end;
-    FMain.qryStatistic.Next;
-  end;
-
-  // Sum same titles.
-  Dec(vArrayLength);
-  for i := 0 to vArrayLength - 1 do
-    for j := i + 1 to vArrayLength do
-    begin
-      if (AData[i].FTitle = AData[j].FTitle) and (AData[j].FTime <> 0) then
-      begin
-        AData[i].FTime := AData[i].FTime + AData[j].FTime;
-        AData[j].FTime := 0;
-      end;
-    end;
-
-  BoobleSort(0, vArrayLength);
-
-  // Create graph and legend.
-  if vArrayLength > 5 then
-  begin
-    SetLength(AData, 5);
-
     brsrsProgram.Clear;
-    j := Length(AData) - 1;
-    for i := 0 to j do
+    if vArrayLength >= 5 then
+    for i := 0 to 4 do
     begin
       vLegendColor := GetRandomColor();
       brsrsProgram.AddBar(AData[i].FTime,
         (SecondToStr(AData[i].FTime) + #13 + '(' + IntToStr(AData[i].FTime) +
-        'cек)'), vLegendColor);
+        'c)'), vLegendColor);
       case i of
         0:
           FillLegend(imgLegend1, vLegendColor, lblLegend1, AData[i].FTitle);
@@ -485,8 +305,8 @@ begin
     end;
   end
   else
-    MessageBox(handle, PChar('Не достатньо даних.'), PChar(''),
-      MB_ICONWARNING + MB_OK);
+  MessageBox(handle, PChar('Не достатньо даних.'), PChar(''),
+    MB_ICONWARNING + MB_OK);
 end;
 
 // Pie chart of user PC time usage.
@@ -762,34 +582,10 @@ begin
   FStatistic.Caption := 'Обробка даних';
   FStatistic.Enabled := False;
   vItemChoice := cbbVisionChoice.ItemIndex;
-  case vItemChoice of
-    0:
-      ShowFiveCategoryTop('Programming');
-    1:
-      if cbbVisionChoice.Items[1] = 'Користувачі' then
-        ShowUserTimeUsed()
-      else
-        ShowFiveFavouriteWebPages(Copy(cbbVisionChoice.Items[1],
-          Pos('- ', cbbVisionChoice.Items[1]) + 2,
-          Length(cbbVisionChoice.Items[1]) - Pos('- ',
-          cbbVisionChoice.Items[1]) + 1));
-    2:
-      ShowFiveFavouriteWebPages(Copy(cbbVisionChoice.Items[2],
-        Pos('- ', cbbVisionChoice.Items[2]) + 2, Length(cbbVisionChoice.Items[2]
-        ) - Pos('- ', cbbVisionChoice.Items[2]) + 1));
-    3:
-      ShowFiveFavouriteWebPages(Copy(cbbVisionChoice.Items[3],
-        Pos('- ', cbbVisionChoice.Items[3]) + 2, Length(cbbVisionChoice.Items[3]
-        ) - Pos('- ', cbbVisionChoice.Items[3]) + 1));
-    4:
-      ShowFiveFavouriteWebPages(Copy(cbbVisionChoice.Items[4],
-        Pos('- ', cbbVisionChoice.Items[4]) + 2, Length(cbbVisionChoice.Items[4]
-        ) - Pos('- ', cbbVisionChoice.Items[4]) + 1));
-    5:
-      ShowFiveFavouriteWebPages(Copy(cbbVisionChoice.Items[5],
-        Pos('- ', cbbVisionChoice.Items[5]) + 2, Length(cbbVisionChoice.Items[5]
-        ) - Pos('- ', cbbVisionChoice.Items[5]) + 1));
-  end;
+  if vItemChoice = 0 then
+    ShowFiveCategoryTop('general')
+  else
+    ShowFiveCategoryTop(cbbVisionChoice.Items[cbbVisionChoice.ItemIndex]);
   FStatistic.Caption := vOldFormTitle;
   if Length(edtSearch.Text) <> 0 then
   begin

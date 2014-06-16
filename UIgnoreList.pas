@@ -46,6 +46,7 @@ begin
   mmoContent.Lines.Clear;
   cbbCategory.Items.Clear;
   mmoContent.Tag := 0;
+  FStatistic.StatisticStartup();
   Close;
 end;
 
@@ -95,7 +96,6 @@ begin
   begin
     cbbCategory.Items.Clear;
     FindFiles('data\category\', '*.txt');
-    FStatistic.StatisticStartup();
   end;
   cbbCategory.Enabled := True;
   mmoContent.Tag := 0;

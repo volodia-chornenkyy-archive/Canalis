@@ -39,8 +39,6 @@ object FCategoryList: TFCategoryList
     Height = 29
     Align = alBottom
     TabOrder = 0
-    ExplicitTop = 296
-    ExplicitWidth = 231
     object btnSave: TBitBtn
       Left = 1
       Top = 1
@@ -80,9 +78,6 @@ object FCategoryList: TFCategoryList
     Align = alBottom
     TabOrder = 1
     OnKeyPress = mmoContentKeyPress
-    ExplicitLeft = 1
-    ExplicitTop = 88
-    ExplicitWidth = 251
   end
   object cbbCategory: TComboBox
     Left = 0

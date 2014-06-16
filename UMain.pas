@@ -163,7 +163,7 @@ begin
   conStatistic.LoginPrompt := False;
   conStatistic.Connected := False;
   conStatistic.ConnectionString := 'Provider=Microsoft.Jet.OLEDB.4.0;' +
-    'Data Source="' + ExtractFilePath(ParamStr(0)) + 'data\Database.mdb";' +
+    'Data Source="' + ExtractFilePath(ParamStr(0)) + 'data\Database.db";' +
       'Persist Security Info=False; Jet OLEDB:Database Password="1"';
   conStatistic.Connected := True;
 
@@ -171,7 +171,6 @@ begin
 
   trayMain.PopupMenu := pmTray;
 
-  WorkTime := StrToTime('0:00:01');
   SetLength(AWorkTime, 100);
 
   // Start work.
@@ -274,6 +273,7 @@ begin
     if (vCurrentTitle <> vPrevTitle) and (vCurrentTitle <> '') then
     begin
       vPrevTitle := vCurrentTitle;
+      WorkTime := StrToTime('0:00:01');
 
       qryStatistic.Insert;
       qryStatistic.FieldByName('S_Title').AsString := SpecSymbolsDelete(vCurrentTitle);
@@ -283,8 +283,6 @@ begin
       qryStatistic.FieldByName('S_UserName').AsString := GetUserFromWindows();
       qryStatistic.Post;
       qryStatistic.Edit;
-
-      WorkTime := StrToTime('0:00:01');
     end;
     WorkTime := IncSecond(WorkTime, 1);
     qryStatistic.FieldByName('S_Time').AsString :=  TimeToStr(WorkTime);
