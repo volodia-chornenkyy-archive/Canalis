@@ -61,7 +61,7 @@ type
     procedure edtSearchChange(Sender: TObject);
     procedure RemoveStringListDuplicates(const stringList: TStringList);
     procedure pmiAddToCategoryClick(Sender: TObject);
-    procedure ShowFiveCategoryTop(nameCategory: string);
+    procedure TopFive(nameCategory: string);
   private
     { Private declarations }
   public
@@ -178,7 +178,7 @@ begin
 end;
 
 // Chart of 5 longest usage title/categorys.
-procedure TFStatistic.ShowFiveCategoryTop(nameCategory: string);
+procedure TFStatistic.TopFive(nameCategory: string);
 var
   vGridLength, vArrayLength: Integer;
   i, j, k: Integer;
@@ -583,9 +583,9 @@ begin
   FStatistic.Enabled := False;
   vItemChoice := cbbVisionChoice.ItemIndex;
   if vItemChoice = 0 then
-    ShowFiveCategoryTop('general')
+    TopFive('general')
   else
-    ShowFiveCategoryTop(cbbVisionChoice.Items[cbbVisionChoice.ItemIndex]);
+    TopFive(cbbVisionChoice.Items[cbbVisionChoice.ItemIndex]);
   FStatistic.Caption := vOldFormTitle;
   if Length(edtSearch.Text) <> 0 then
   begin
