@@ -1,7 +1,6 @@
 object FStatistic: TFStatistic
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu, biMinimize]
   Caption = #1040#1082#1090#1080#1074#1085#1110#1089#1090#1100' '#1082#1086#1088#1080#1089#1090#1091#1074#1072#1095#1072
   ClientHeight = 492
   ClientWidth = 772
@@ -173,10 +172,6 @@ object FStatistic: TFStatistic
     object tsGraphics: TTabSheet
       Caption = #1044#1110#1072#1075#1088#1072#1084#1080
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object chtMain: TChart
         Left = 0
         Top = 0

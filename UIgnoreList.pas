@@ -60,6 +60,7 @@ begin
       + '.txt');
     cbbCategory.Items.Clear;
     FindFiles('data\category\', '*.txt');
+    FStatistic.cbbVisionChoiceChange(nil);
   end;
 end;
 

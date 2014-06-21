@@ -537,7 +537,8 @@ begin
   if FindFirst('data\category\*.txt', faAnyFile, sr) = 0 then
   begin
     repeat
-      cbbVisionChoice.Items.Add(FMain.ExtractFileNameEX(sr.Name));
+      if FMain.ExtractFileNameEX(sr.Name) <> 'Ignore' then
+        cbbVisionChoice.Items.Add(FMain.ExtractFileNameEX(sr.Name));
     until FindNext(sr) <> 0;
     FindClose(sr);
   end;
