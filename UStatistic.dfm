@@ -245,8 +245,6 @@ object FStatistic: TFStatistic
         BevelWidth = 2
         Color = clWhite
         TabOrder = 0
-        ExplicitLeft = 3
-        ExplicitTop = 16
         DefaultCanvas = 'TGDIPlusCanvas'
         ColorPaletteIndex = 19
         object psrsUser: TPieSeries

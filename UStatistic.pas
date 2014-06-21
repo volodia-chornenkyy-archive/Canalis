@@ -166,7 +166,6 @@ begin
   vCategoryPos := Pos(' - Google', title);
   if vCategoryPos <> 0 then
     Delete(title, vCategoryPos, Length(title));
-
   lbl.Hint := title;
   if Length(title) > 15 then
   begin
@@ -177,7 +176,7 @@ begin
     lbl.Caption := title;
 end;
 
-// Chart of 5 longest usage title/categorys.
+// Chart of 5 longest usage title/categories.
 procedure TFStatistic.TopFive(nameCategory: string);
 var
   vGridLength, vArrayLength: Integer;
@@ -332,63 +331,61 @@ begin
   SetLength(AData, 0);
   FMain.qryStatistic.First;
   vGridLength := dbgrdStatistic.DataSource.DataSet.RecordCount - 1;
-  if vGridLength > 0 then
+  SetLength(AData, vGridLength + 1);
+  for i := 0 to vGridLength do
   begin
-    SetLength(AData, vGridLength + 1);
-    for i := 0 to vGridLength do
+    AData[i].FTitle := FMain.qryStatistic.FieldByName('S_UserName').AsString;
+    AData[i].FTime := TimeToSecond(FMain.qryStatistic.FieldByName('S_Time')
+      .AsDateTime);
+    FMain.qryStatistic.Next;
+  end;
+
+  for i := 0 to vGridLength - 1 do
+    for j := i + 1 to vGridLength do
     begin
-      AData[i].FTitle := FMain.qryStatistic.FieldByName('S_UserName').AsString;
-      AData[i].FTime := TimeToSecond(FMain.qryStatistic.FieldByName('S_Time')
-        .AsDateTime);
-      FMain.qryStatistic.Next;
+      if (AData[i].FTitle = AData[j].FTitle) and (AData[j].FTime <> 0) then
+      begin
+        AData[i].FTime := AData[i].FTime + AData[j].FTime;
+        AData[j].FTime := 0;
+      end;
     end;
 
-    for i := 0 to vGridLength - 1 do
-      for j := i + 1 to vGridLength do
-      begin
-        if (AData[i].FTitle = AData[j].FTitle) and (AData[j].FTime <> 0) then
-        begin
-          AData[i].FTime := AData[i].FTime + AData[j].FTime;
-          AData[j].FTime := 0;
-        end;
-      end;
+  BoobleSort(0, vGridLength);
 
-    BoobleSort(0, vGridLength);
+  if vGridLength > 5 then
+  begin
+    SetLength(AData, cbbUsers.Items.Count);
 
-    if vGridLength > 5 then
+    psrsUser.Clear;
+    // Start from 3 couze` char only available from two users.
+    lblLegend3.Caption := '';
+    lblLegend4.Caption := '';
+    lblLegend5.Caption := '';
+    vGridLength := Length(AData) - 1;
+    //j := 0;
+    for i := 0 to vGridLength do
     begin
-      SetLength(AData, 5);
-
-      psrsUser.Clear;
-      vGridLength := Length(AData) - 1;
-      j := 0;
-      for i := 0 to vGridLength do
-      begin
-        if AData[i].FTime <> 0 then
-        begin
-          vLegendColor := GetRandomColor();
-          psrsUser.AddPie(AData[i].FTime,
-            (SecondToStr(AData[i].FTime) + #13 + '(' + IntToStr(AData[i].FTime)
-            + 'cек)'), vLegendColor);
-          case j of
-            0:
-              FillLegend(imgLegend1, vLegendColor, lblLegend1, AData[i].FTitle);
-            1:
-              FillLegend(imgLegend2, vLegendColor, lblLegend2, AData[i].FTitle);
-            2:
-              FillLegend(imgLegend3, vLegendColor, lblLegend3, AData[i].FTitle);
-            3:
-              FillLegend(imgLegend4, vLegendColor, lblLegend4, AData[i].FTitle);
-            4:
-              FillLegend(imgLegend5, vLegendColor, lblLegend5, AData[i].FTitle);
-          end;
-          Inc(j);
+      //if AData[i].FTime <> 0 then
+      //begin
+        vLegendColor := GetRandomColor();
+        psrsUser.AddPie(AData[i].FTime,
+          (SecondToStr(AData[i].FTime) + #13 + '(' + IntToStr(AData[i].FTime)
+          + 'cек)'), vLegendColor);
+        case i of
+          0:
+            FillLegend(imgLegend1, vLegendColor, lblLegend1, AData[i].FTitle);
+          1:
+            FillLegend(imgLegend2, vLegendColor, lblLegend2, AData[i].FTitle);
+          2:
+            FillLegend(imgLegend3, vLegendColor, lblLegend3, AData[i].FTitle);
+          3:
+            FillLegend(imgLegend4, vLegendColor, lblLegend4, AData[i].FTitle);
+          4:
+            FillLegend(imgLegend5, vLegendColor, lblLegend5, AData[i].FTitle);
         end;
-      end;
-    end
-    else
-      MessageBox(handle, PChar('Не достатньо даних.'), PChar(''),
-        MB_ICONWARNING + MB_OK);
+        //Inc(j);
+      //end;
+    end;
   end;
 end;
 
@@ -437,6 +434,7 @@ begin
   end;
 end;
 
+// Data filtering and loading to DBGrid.
 procedure TFStatistic.BetweenQuery;
 var
   vDate: TDate;
@@ -454,8 +452,9 @@ begin
   FMain.qryStatistic.SQL.Add('WHERE (S_StartDate BETWEEN :SDate AND :FDate)');
   if FSettings.chkFiltered.Checked then
     FMain.qryStatistic.SQL.Add(IgnoreListToSql());
-  FMain.qryStatistic.SQL.Add(' AND (S_UserName LIKE ''' +
-    FStatistic.cbbUsers.Items[FStatistic.cbbUsers.ItemIndex] + ''')');
+  if cbbVisionChoice.Items[cbbVisionChoice.ItemIndex] <> 'Користувачі' then
+    FMain.qryStatistic.SQL.Add(' AND (S_UserName LIKE ''' +
+      FStatistic.cbbUsers.Items[FStatistic.cbbUsers.ItemIndex] + ''')');
   // User filter from edit.
   if Length(edtSearch.Text) <> 0 then
     FMain.qryStatistic.SQL.Add(' AND (S_Title LIKE ''%' + edtSearch.Text
@@ -554,6 +553,7 @@ begin
     FMain.qryStatistic.Next;
   end;
   RemoveStringListDuplicates(vUserList);
+  cbbUsers.Items.Clear;
   for i := 0 to vUserList.Count - 1 do
     cbbUsers.Items.Add(vUserList[i]);
   if vUserList.Count = 1 then
@@ -564,10 +564,12 @@ begin
   end
   else
   begin
+    cbbVisionChoice.Items.Add('Користувачі');
     cbbUsers.Visible := True;
     lblUsers.Visible := True;
   end;
   cbbUsers.ItemIndex := 0;
+  cbbVisionChoice.ItemIndex := 0;
   vUserList.Free;
 end;
 
@@ -584,8 +586,13 @@ begin
   vItemChoice := cbbVisionChoice.ItemIndex;
   if vItemChoice = 0 then
     TopFive('general')
+  else if cbbVisionChoice.Items[cbbVisionChoice.ItemIndex] <> 'Користувачі' then
+    TopFive(cbbVisionChoice.Items[cbbVisionChoice.ItemIndex])
   else
-    TopFive(cbbVisionChoice.Items[cbbVisionChoice.ItemIndex]);
+  begin
+    BetweenQuery();
+    ShowUserTimeUsed();
+  end;
   FStatistic.Caption := vOldFormTitle;
   if Length(edtSearch.Text) <> 0 then
   begin
@@ -600,6 +607,7 @@ end;
 procedure TFStatistic.cbbUsersChange(Sender: TObject);
 begin
   cbbVisionChoice.ItemIndex := 0;
+  BetweenQuery();
   cbbVisionChoiceChange(nil);
 end;
 
@@ -683,6 +691,7 @@ begin
         cbbVisionChoice.Visible := True;
         lblVisionChoice.Visible := True;
         edtSearch.Visible := False;
+        cbbVisionChoice.ItemIndex := 0;
         if boolChanges then
         begin
           boolChanges := False;

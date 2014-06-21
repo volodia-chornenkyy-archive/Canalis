@@ -113,6 +113,7 @@ begin
         Autorun(False,'Canalis',Application.ExeName);
       MessageBox(handle, PChar('Налаштування успішно збережені'),
       PChar(''), MB_ICONINFORMATION+MB_OK);
+      FStatistic.StatisticStartup();
       FStatistic.BetweenQuery();
       if FStatistic.pgcMain.TabIndex = 1 then
         FStatistic.cbbVisionChoiceChange(nil);
