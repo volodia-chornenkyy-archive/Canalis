@@ -1,3 +1,5 @@
 It`s my collage diploma project.
-Writes in Delphi XE5.
-==========
+
+The goal of this system is the monitoring of the user's computer.
+
+Writes in Delphi XE5 IDE.
